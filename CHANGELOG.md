@@ -1,6 +1,6 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.0.0-alpha.1...master)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.0.0-alpha.1...main)
 
 # 1.0.0-alpha.1
 

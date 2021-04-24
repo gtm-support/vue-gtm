@@ -16,7 +16,7 @@
 ---
 
 <p align="center">
-  <a href="https://github.com/gtm-support/vue-gtm/blob/master/LICENSE">
+  <a href="https://github.com/gtm-support/vue-gtm/blob/main/LICENSE">
     <img alt="license: Apache-2.0" src="https://img.shields.io/github/license/gtm-support/vue-gtm.svg?style=flat-square">
   </a>
   <a href="https://www.npmjs.com/package/@gtm-support/vue-gtm">
