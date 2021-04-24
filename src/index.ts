@@ -1,23 +1,10 @@
-import { App, nextTick, Plugin } from "vue";
-import { DEFAULT_CONFIG, VueGtmContainer, VueGtmQueryParams, VueGtmUseOptions } from "./config";
-import GtmPlugin from "./plugin";
-import { loadScript } from "./utils";
+import { assertIsGtmId } from '@gtm-support/core/lib/assertIsGtmId';
+import { loadScript, LoadScriptOptions } from '@gtm-support/core/lib/index';
+import { App, nextTick, Plugin } from 'vue';
+import { DEFAULT_CONFIG, VueGtmContainer, VueGtmQueryParams, VueGtmUseOptions } from './config';
+import GtmPlugin from './plugin';
 
 let gtmPlugin: GtmPlugin | undefined;
-const GTM_ID_PATTERN: RegExp = /^GTM-[0-9A-Z]+$/;
-
-/**
- * Assert that the given id is a valid GTM Container ID.
- *
- * Tested against pattern: `/^GTM-[0-9A-Z]+$/`.
- *
- * @param id A GTM Container ID.
- */
-function assertIsGtmId(id: string): asserts id {
-  if (typeof id !== "string" || !GTM_ID_PATTERN.test(id)) {
-    throw new Error(`GTM-ID '${id}' is not valid`);
-  }
-}
 
 /**
  * Installation procedure.
@@ -25,10 +12,10 @@ function assertIsGtmId(id: string): asserts id {
  * @param app The Vue app instance.
  * @param options Configuration options.
  */
-function install(app: App, options: VueGtmUseOptions = { id: "" }): void {
+function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
   if (Array.isArray(options.id)) {
     for (const idOrObject of options.id) {
-      if (typeof idOrObject === "string") {
+      if (typeof idOrObject === 'string') {
         assertIsGtmId(idOrObject);
       } else {
         assertIsGtmId(idOrObject.id);
@@ -54,29 +41,29 @@ function install(app: App, options: VueGtmUseOptions = { id: "" }): void {
   if (gtmPlugin.options.enabled && gtmPlugin.options.loadScript) {
     if (Array.isArray(options.id)) {
       options.id.forEach((id: string | VueGtmContainer) => {
-        if (typeof id === "string") {
-          loadScript(id, options);
+        if (typeof id === 'string') {
+          loadScript(id, options as LoadScriptOptions);
         } else {
           const newConf: VueGtmUseOptions = {
-            ...options,
+            ...options
           };
 
           if (id.queryParams != null) {
             newConf.queryParams = {
               ...newConf.queryParams,
-              ...id.queryParams,
+              ...id.queryParams
             } as VueGtmQueryParams;
           }
 
-          loadScript(id.id, newConf);
+          loadScript(id.id, newConf as LoadScriptOptions);
         }
       });
     } else {
-      loadScript(options.id, options);
+      loadScript(options.id, options as LoadScriptOptions);
     }
   }
 
-  app.provide("gtm", options);
+  app.provide('gtm', options);
 }
 
 /**
@@ -89,13 +76,13 @@ function install(app: App, options: VueGtmUseOptions = { id: "" }): void {
  */
 async function initVueRouterGuard(
   app: App,
-  vueRouter: Exclude<VueGtmUseOptions["vueRouter"], undefined>,
-  ignoredViews: VueGtmUseOptions["ignoredViews"] = [],
-  trackOnNextTick: VueGtmUseOptions["trackOnNextTick"]
+  vueRouter: Exclude<VueGtmUseOptions['vueRouter'], undefined>,
+  ignoredViews: VueGtmUseOptions['ignoredViews'] = [],
+  trackOnNextTick: VueGtmUseOptions['trackOnNextTick']
 ): Promise<void> {
-  let vueRouterModule: typeof import("vue-router");
+  let vueRouterModule: typeof import('vue-router');
   try {
-    vueRouterModule = await import("vue-router");
+    vueRouterModule = await import('vue-router');
   } catch {
     console.warn("[VueGtm]: You tried to register 'vueRouter' for vue-gtm, but 'vue-router' was not found.");
     return;
@@ -106,12 +93,12 @@ async function initVueRouterGuard(
 
   vueRouter.afterEach((to, from, failure) => {
     // Ignore some routes
-    if (typeof to.name !== "string" || ignoredViews.indexOf(to.name.toLowerCase()) !== -1) {
+    if (typeof to.name !== 'string' || ignoredViews.indexOf(to.name.toLowerCase()) !== -1) {
       return;
     }
 
     // Dispatch vue event using meta gtm value if defined otherwise fallback to route name
-    const name: string = to.meta && typeof to.meta.gtm === "string" && !!to.meta.gtm ? to.meta.gtm : to.name;
+    const name: string = to.meta && typeof to.meta.gtm === 'string' && !!to.meta.gtm ? to.meta.gtm : to.name;
 
     if (vueRouterModule.isNavigationFailure(failure, vueRouterModule.NavigationFailureType.aborted)) {
       if (gtmPlugin?.debugEnabled()) {
@@ -124,12 +111,12 @@ async function initVueRouterGuard(
     }
 
     const additionalEventData: Record<string, any> = (to.meta?.gtmAdditionalEventData as Record<string, any>) ?? {};
-    const baseUrl: string = vueRouter.options?.history?.base ?? "";
+    const baseUrl: string = vueRouter.options?.history?.base ?? '';
     let fullUrl: string = baseUrl;
-    if (!fullUrl.endsWith("/")) {
-      fullUrl += "/";
+    if (!fullUrl.endsWith('/')) {
+      fullUrl += '/';
     }
-    fullUrl += to.fullPath.startsWith("/") ? to.fullPath.substr(1) : to.fullPath;
+    fullUrl += to.fullPath.startsWith('/') ? to.fullPath.substr(1) : to.fullPath;
 
     if (trackOnNextTick) {
       void nextTick(() => {
@@ -151,7 +138,7 @@ export function createGtm(options: VueGtmUseOptions): VueGtmPlugin {
   return { install: (app: App) => install(app, options) };
 }
 
-declare module "@vue/runtime-core" {
+declare module '@vue/runtime-core' {
   // eslint-disable-next-line jsdoc/require-jsdoc
   export interface ComponentCustomProperties {
     /**
@@ -165,7 +152,7 @@ declare module "@vue/runtime-core" {
  * Vue GTM Plugin.
  */
 export type VueGtmPlugin = Plugin;
-export { VueGtmUseOptions } from "./config";
+export { VueGtmUseOptions } from './config';
 
 const _default: VueGtmPlugin = { install };
 

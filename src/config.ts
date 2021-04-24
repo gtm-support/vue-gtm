@@ -1,36 +1,19 @@
-import type { Router } from "vue-router";
+import type { GtmIdContainer, GtmQueryParams } from '@gtm-support/core/lib/GtmContainer';
+import type { Router } from 'vue-router';
 
 /**
  * Query parameter object that will be send to GTM.
+ *
+ * @deprecated Use `GtmQueryParams`.
  */
-export interface VueGtmQueryParams {
-  /**
-   * GTM auth environment parameter.
-   */
-  gtm_auth: string;
-  /**
-   * GTM preview environment parameter.
-   */
-  gtm_preview: string;
-  /**
-   * GTM cookies win environment parameter.
-   */
-  gtm_cookies_win: string;
-}
+export type VueGtmQueryParams = GtmQueryParams;
 
 /**
  * GTM ID Container.
+ *
+ * @deprecated Use `GtmIdContainer`.
  */
-export interface VueGtmContainer {
-  /**
-   * GTM Container ID.
-   */
-  id: string;
-  /**
-   * Add url query string when load gtm.js with GTM ID.
-   */
-  queryParams?: VueGtmQueryParams;
-}
+export type VueGtmContainer = GtmIdContainer;
 
 /**
  * Options passed to the plugin.
@@ -134,5 +117,5 @@ export const DEFAULT_CONFIG: Readonly<{
   trackOnNextTick: false,
   loadScript: true,
   defer: false,
-  compatibility: false,
+  compatibility: false
 } as const;

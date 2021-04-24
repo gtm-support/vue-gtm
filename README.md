@@ -1,6 +1,6 @@
 <h1 align="center">Vue Google Tag Manager</h1>
 
-<h4 align="center">*** Maintainers & Contributors welcome ***</h4>
+<h4 align="center">*** Contributors welcome ***</h4>
 
 <p align="center">
   <a href="https://tagmanager.google.com/">
@@ -16,20 +16,20 @@
 ---
 
 <p align="center">
-  <a href="https://github.com/mib200/vue-gtm/blob/master/LICENSE">
-    <img alt="license: Apache-2.0" src="https://img.shields.io/github/license/mib200/vue-gtm.svg?style=flat-square">
+  <a href="https://github.com/gtm-support/vue-gtm/blob/master/LICENSE">
+    <img alt="license: Apache-2.0" src="https://img.shields.io/github/license/gtm-support/vue-gtm.svg?style=flat-square">
   </a>
-  <a href="https://www.npmjs.com/package/vue-gtm">
-    <img alt="NPM package" src="https://img.shields.io/npm/v/vue-gtm.svg?style=flat-square">
+  <a href="https://www.npmjs.com/package/@gtm-support/vue-gtm">
+    <img alt="NPM package" src="https://img.shields.io/npm/v/@gtm-support/vue-gtm.svg?style=flat-square">
   </a>
-  <a href="https://www.npmjs.com/package/vue-gtm">
-    <img alt="downloads" src="https://img.shields.io/npm/dt/vue-gtm.svg?style=flat-square">
+  <a href="https://www.npmjs.com/package/@gtm-support/vue-gtm">
+    <img alt="downloads" src="https://img.shields.io/npm/dt/@gtm-support/vue-gtm.svg?style=flat-square">
   </a>
   <a href="#badge">
     <img alt="code style: Prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square">
   </a>
-  <a href="https://github.com/mib200/vue-gtm/actions?query=branch%3Amaster+workflow%3ACI">
-    <img alt="Build Status" src="https://github.com/mib200/vue-gtm/workflows/CI/badge.svg?branch=master">
+  <a href="https://github.com/gtm-support/vue-gtm/actions/workflows/ci.yml">
+    <img alt="Build Status" src="https://github.com/gtm-support/vue-gtm/actions/workflows/ci.yml/badge.svg?branch=main">
   </a>
 </p>
 
@@ -37,28 +37,27 @@ This plugin will help you in your common GTM tasks.
 
 **Note: If you are looking to track all Vuex mutations, you can use [Vuex GTM plugin](https://gist.github.com/matt-e-king/ebdb39088c50b96bbbbe77c5bc8abb2b)**
 
-> If you want Vue 2 compatibility, please stick to the exact version ["3.x.x-vue2"](https://github.com/mib200/vue-gtm/issues/98#issuecomment-700806816).  
-> `"~3.x.x-vue2"` or `"^3.x.x-vue2"` will fallback to npm's `latest` tag and will not work with Vue 2 :warning:.
+> If you want Vue 2 compatibility, please use the package `@gtm-support/vue2-gtm`.
 
 # Requirements
 
-- **Vue.js.** >= 2.0.0
+- **Vue.** >= 3.0.0
 - **Google Tag Manager account.** To send data to
 
 **Optional dependencies**
 
-- **Vue Router** >= 2.x - In order to use auto-tracking of screens
+- **Vue Router** >= 4.x - In order to use auto-tracking of screens
 
 # Configuration
 
-`npm install vue-gtm` or `yarn add vue-gtm` if you use [Yarn package manager](https://yarnpkg.com)
+`npm install @gtm-support/vue-gtm` or `yarn add @gtm-support/vue-gtm` if you use [Yarn package manager](https://yarnpkg.com)
 
 Here is an example configuration:
 
 ```js
-import { createApp } from "vue";
-import { createGtm } from "vue-gtm";
-import router from "./router";
+import { createApp } from 'vue';
+import { createGtm } from '@gtm-support/vue-gtm';
+import router from './router';
 
 const app = createApp(App);
 
@@ -66,53 +65,25 @@ app.use(router);
 
 app.use(
   createGtm({
-    id: "GTM-xxxxxx", // Your GTM single container ID, array of container ids ['GTM-xxxxxx', 'GTM-yyyyyy'] or array of objects [{id: 'GTM-xxxxxx', queryParams: { gtm_auth: 'abc123', gtm_preview: 'env-4', gtm_cookies_win: 'x'}}, {id: 'GTM-yyyyyy', queryParams: {gtm_auth: 'abc234', gtm_preview: 'env-5', gtm_cookies_win: 'x'}}], // Your GTM single container ID or array of container ids ['GTM-xxxxxx', 'GTM-yyyyyy']
+    id: 'GTM-xxxxxx', // Your GTM single container ID, array of container ids ['GTM-xxxxxx', 'GTM-yyyyyy'] or array of objects [{id: 'GTM-xxxxxx', queryParams: { gtm_auth: 'abc123', gtm_preview: 'env-4', gtm_cookies_win: 'x'}}, {id: 'GTM-yyyyyy', queryParams: {gtm_auth: 'abc234', gtm_preview: 'env-5', gtm_cookies_win: 'x'}}], // Your GTM single container ID or array of container ids ['GTM-xxxxxx', 'GTM-yyyyyy']
     queryParams: {
       // Add url query string when load gtm.js with GTM ID (optional)
-      gtm_auth: "AB7cDEf3GHIjkl-MnOP8qr",
-      gtm_preview: "env-4",
-      gtm_cookies_win: "x",
+      gtm_auth: 'AB7cDEf3GHIjkl-MnOP8qr',
+      gtm_preview: 'env-4',
+      gtm_cookies_win: 'x'
     },
     defer: false, // Script can be set to `defer` to speed up page load at the cost of less accurate results (in case visitor leaves before script is loaded, which is unlikely but possible). Defaults to false, so the script is loaded `async` by default
     compatibility: false, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
-    nonce: "2726c7f26c", // Will add `nonce` to the script tag
+    nonce: '2726c7f26c', // Will add `nonce` to the script tag
     enabled: true, // defaults to true. Plugin can be disabled by setting this to false for Ex: enabled: !!GDPR_Cookie (optional)
     debug: true, // Whether or not display console logs debugs (optional)
     loadScript: true, // Whether or not to load the GTM Script (Helpful if you are including GTM manually, but need the dataLayer functionality in your components) (optional)
     vueRouter: router, // Pass the router instance to automatically sync with router (optional)
-    ignoredViews: ["homepage"], // Don't trigger events for specified router names (case insensitive) (optional)
-    trackOnNextTick: false, // Whether or not call trackView in Vue.nextTick
+    ignoredViews: ['homepage'], // Don't trigger events for specified router names (case insensitive) (optional)
+    trackOnNextTick: false // Whether or not call trackView in Vue.nextTick
   })
 );
 ```
-
-<details>
-  <summary>Vue 2 example</summary>
-
-```js
-import VueGtm from "vue-gtm";
-import VueRouter from "vue-router";
-const router = new VueRouter({ routes, mode, linkActiveClass });
-
-Vue.use(VueGtm, {
-  id: "GTM-xxxxxx", // Your GTM single container ID or array of container ids ['GTM-xxxxxx', 'GTM-yyyyyy'] or array of objects [{id: 'GTM-xxxxxx', queryPararms: { gtm_auth: 'abc123', gtm_preview: 'env-4', gtm_cookies_win: 'x'}}, {id: 'GTM-yyyyyy', queryParams: {gtm_auth: 'abc234', gtm_preview: 'env-5', gtm_cookies_win: 'x'}}]
-  queryParams: {
-    // Add url query string when load gtm.js with GTM ID (optional)
-    gtm_auth: "AB7cDEf3GHIjkl-MnOP8qr",
-    gtm_preview: "env-4",
-    gtm_cookies_win: "x",
-  },
-  defer: false, // defaults to false. Script can be set to `defer` to increase page-load-time at the cost of less accurate results (in case visitor leaves before script is loaded, which is unlikely but possible)
-  enabled: true, // defaults to true. Plugin can be disabled by setting this to false for Ex: enabled: !!GDPR_Cookie (optional)
-  debug: true, // Whether or not display console logs debugs (optional)
-  loadScript: true, // Whether or not to load the GTM Script (Helpful if you are including GTM manually, but need the dataLayer functionality in your components) (optional)
-  vueRouter: router, // Pass the router instance to automatically sync with router (optional)
-  ignoredViews: ["homepage"], // Don't trigger events for specified router names (case insensitive) (optional)
-  trackOnNextTick: false, // Whether or not call trackView in Vue.nextTick
-});
-```
-
-</details>
 
 This injects the tag manager script in the page, except when `enabled` is set to `false`.
 In that case it will be injected when calling `this.$gtm.enable(true)` for the first time.
@@ -125,27 +96,27 @@ Once the configuration is completed, you can access vue gtm instance in your com
 
 ```js
 export default {
-  name: "MyComponent",
+  name: 'MyComponent',
   data() {
     return {
-      someData: false,
+      someData: false
     };
   },
   methods: {
     onClick() {
       this.$gtm.trackEvent({
         event: null, // Event type [default = 'interaction'] (Optional)
-        category: "Calculator",
-        action: "click",
-        label: "Home page SIP calculator",
+        category: 'Calculator',
+        action: 'click',
+        label: 'Home page SIP calculator',
         value: 5000,
-        noninteraction: false, // Optional
+        noninteraction: false // Optional
       });
-    },
+    }
   },
   mounted() {
-    this.$gtm.trackView("MyScreenName", "currentPath");
-  },
+    this.$gtm.trackView('MyScreenName', 'currentPath');
+  }
 };
 ```
 
@@ -153,13 +124,13 @@ The passed variables are mapped with GTM data layer as follows
 
 ```js
 dataLayer.push({
-  event: event || "interaction",
+  event: event || 'interaction',
   target: category,
   action: action,
-  "target-properties": label,
+  'target-properties': label,
   value: value,
-  "interaction-type": noninteraction,
-  ...rest,
+  'interaction-type': noninteraction,
+  ...rest
 });
 ```
 
@@ -170,7 +141,7 @@ It's also possible to send completely custom data to GTM with just pushing somet
 ```js
 if (this.$gtm.enabled()) {
   window.dataLayer?.push({
-    event: "myEvent",
+    event: 'myEvent'
     // further parameters
   });
 }
@@ -192,10 +163,10 @@ Example:
 
 ```js
 const myRoute = {
-  path: "myRoute",
-  name: "MyRouteName",
+  path: 'myRoute',
+  name: 'MyRouteName',
   component: SomeComponent,
-  meta: { gtm: "MyCustomValue" },
+  meta: { gtm: 'MyCustomValue' }
 };
 ```
 
@@ -213,29 +184,29 @@ Example:
 </template>
 
 <script>
-import { useGtm } from "vue-gtm";
+import { useGtm } from '@gtm-support/vue-gtm';
 
 export default {
-  name: "MyCustomComponent",
+  name: 'MyCustomComponent',
 
   setup() {
     const gtm = useGtm();
 
     function triggerEvent() {
       gtm.trackEvent({
-        event: "event name",
-        category: "category",
-        action: "click",
-        label: "My custom component trigger",
+        event: 'event name',
+        category: 'category',
+        action: 'click',
+        label: 'My custom component trigger',
         value: 5000,
-        noninteraction: false,
+        noninteraction: false
       });
     }
 
     return {
-      triggerEvent,
+      triggerEvent
     };
-  },
+  }
 };
 </script>
 ```
@@ -284,4 +255,5 @@ this.$gtm.debug(false);
 
 ## Credits
 
-[ScreamZ vue-analytics](https://github.com/ScreamZ/vue-analytics)
+- [mib200 vue-gtm](https://github.com/mib200/vue-gtm)
+- [ScreamZ vue-analytics](https://github.com/ScreamZ/vue-analytics)

@@ -10,8 +10,8 @@ assignees: ""
 
 | Tool   | Version       |
 | ------ | ------------- |
-| Plugin | v3.x.x        |
-| Vue    | v2.x.x        |
+| Plugin | v1.x.x        |
+| Vue    | v3.x.x        |
 | Node   | vx.x.x        |
 | OS     | win,linux,mac |
 
