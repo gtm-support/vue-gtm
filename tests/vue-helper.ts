@@ -1,4 +1,5 @@
-import { App, createApp, defineComponent } from 'vue';
+import Vue from 'vue';
+import { ExtendedVue } from 'vue/types/vue';
 
 export function appendAppDivToBody(): void {
   const appDiv: HTMLDivElement = document.createElement('div');
@@ -8,14 +9,18 @@ export function appendAppDivToBody(): void {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/explicit-module-boundary-types
 export function createAppWithComponent() {
-  // eslint-disable-next-line @typescript-eslint/typedef
-  const appComponent = defineComponent({
+  const appComponent: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
     name: 'App',
-    render() {
-      return null;
+    render(createElement) {
+      return createElement('div');
     }
   });
-  const app: App<Element> = createApp(appComponent);
+  const app: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+    name: 'App',
+    render(createElement) {
+      return createElement(appComponent);
+    }
+  });
   return { app, component: appComponent };
 }
 

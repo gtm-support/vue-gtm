@@ -1,5 +1,5 @@
 {
-  "name": "@gtm-support/vue-gtm",
+  "name": "@gtm-support/vue2-gtm",
   "version": "1.0.0-alpha.1",
   "description": "Simple implementation of Google Tag Manager for Vue",
   "main": "dist/index.js",
@@ -74,13 +74,10 @@
     "prettier-plugin-organize-imports": "~1.1.1",
     "ts-jest": "~26.5.5",
     "typescript": "~4.2.4",
-    "vue": "^3.0.0",
-    "vue-router": "^4.0.0"
+    "vue": "^2.6.12",
+    "vue-router": "^3.5.1"
   },
   "peerDependencies": {
-    "vue": "^3.0.0"
-  },
-  "optionalDependencies": {
-    "vue-router": "^4.0.0"
+    "vue": "^2.6.12"
   }
 }

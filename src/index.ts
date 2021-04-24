@@ -1,5 +1,5 @@
 import { assertIsGtmId, loadScript, LoadScriptOptions } from '@gtm-support/core';
-import { App, nextTick, Plugin } from 'vue';
+import _Vue, { PluginObject } from 'vue';
 import { DEFAULT_CONFIG, VueGtmContainer, VueGtmQueryParams, VueGtmUseOptions } from './config';
 import GtmPlugin from './plugin';
 
@@ -8,10 +8,10 @@ let gtmPlugin: GtmPlugin | undefined;
 /**
  * Installation procedure.
  *
- * @param app The Vue app instance.
+ * @param Vue The Vue instance.
  * @param options Configuration options.
  */
-function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
+function install(Vue: typeof _Vue, options: VueGtmUseOptions = { id: '' }): void {
   if (Array.isArray(options.id)) {
     for (const idOrObject of options.id) {
       if (typeof idOrObject === 'string') {
@@ -29,11 +29,11 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
 
   // Add to vue prototype and also from globals
   gtmPlugin = new GtmPlugin(options.id, options);
-  app.config.globalProperties.$gtm = gtmPlugin;
+  Vue.prototype.$gtm = Vue.gtm = gtmPlugin;
 
   // Handle vue-router if defined
   if (options.vueRouter) {
-    void initVueRouterGuard(app, options.vueRouter, options.ignoredViews, options.trackOnNextTick);
+    initVueRouterGuard(Vue, options.vueRouter, options.ignoredViews, options.trackOnNextTick);
   }
 
   // Load GTM script when enabled
@@ -61,28 +61,23 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
       loadScript(options.id, options as LoadScriptOptions);
     }
   }
-
-  app.provide('gtm', options);
 }
 
 /**
  * Initialize the router guard.
  *
- * @param app The Vue app instance.
+ * @param Vue The Vue instance.
  * @param vueRouter The Vue router instance to attach the guard.
  * @param ignoredViews An array of route name that will be ignored.
  * @param trackOnNextTick Whether or not to call `trackView` in `Vue.nextTick`.
  */
-async function initVueRouterGuard(
-  app: App,
+function initVueRouterGuard(
+  Vue: typeof _Vue,
   vueRouter: Exclude<VueGtmUseOptions['vueRouter'], undefined>,
   ignoredViews: VueGtmUseOptions['ignoredViews'] = [],
   trackOnNextTick: VueGtmUseOptions['trackOnNextTick']
-): Promise<void> {
-  let vueRouterModule: typeof import('vue-router');
-  try {
-    vueRouterModule = await import('vue-router');
-  } catch {
+): void {
+  if (!vueRouter) {
     console.warn("[VueGtm]: You tried to register 'vueRouter' for vue-gtm, but 'vue-router' was not found.");
     return;
   }
@@ -90,7 +85,7 @@ async function initVueRouterGuard(
   // Flatten routes name
   ignoredViews = ignoredViews.map((view) => view.toLowerCase());
 
-  vueRouter.afterEach((to, from, failure) => {
+  vueRouter.afterEach((to) => {
     // Ignore some routes
     if (typeof to.name !== 'string' || ignoredViews.indexOf(to.name.toLowerCase()) !== -1) {
       return;
@@ -98,19 +93,8 @@ async function initVueRouterGuard(
 
     // Dispatch vue event using meta gtm value if defined otherwise fallback to route name
     const name: string = to.meta && typeof to.meta.gtm === 'string' && !!to.meta.gtm ? to.meta.gtm : to.name;
-
-    if (vueRouterModule.isNavigationFailure(failure, vueRouterModule.NavigationFailureType.aborted)) {
-      if (gtmPlugin?.debugEnabled()) {
-        console.log(`[VueGtm]: '${name}' not tracked due to navigation aborted`);
-      }
-    } else if (vueRouterModule.isNavigationFailure(failure, vueRouterModule.NavigationFailureType.cancelled)) {
-      if (gtmPlugin?.debugEnabled()) {
-        console.log(`[VueGtm]: '${name}' not tracked due to navigation cancelled`);
-      }
-    }
-
-    const additionalEventData: Record<string, any> = (to.meta?.gtmAdditionalEventData as Record<string, any>) ?? {};
-    const baseUrl: string = vueRouter.options?.history?.base ?? '';
+    const additionalEventData: Record<string, any> = to.meta?.gtmAdditionalEventData ?? {};
+    const baseUrl: string = vueRouter.options.base ?? '';
     let fullUrl: string = baseUrl;
     if (!fullUrl.endsWith('/')) {
       fullUrl += '/';
@@ -118,7 +102,7 @@ async function initVueRouterGuard(
     fullUrl += to.fullPath.startsWith('/') ? to.fullPath.substr(1) : to.fullPath;
 
     if (trackOnNextTick) {
-      void nextTick(() => {
+      Vue.nextTick(() => {
         gtmPlugin?.trackView(name, fullUrl, additionalEventData);
       });
     } else {
@@ -127,30 +111,27 @@ async function initVueRouterGuard(
   });
 }
 
-/**
- * Create the Vue GTM instance.
- *
- * @param options Options.
- * @returns The Vue GTM plugin instance.
- */
-export function createGtm(options: VueGtmUseOptions): VueGtmPlugin {
-  return { install: (app: App) => install(app, options) };
-}
-
-declare module '@vue/runtime-core' {
+declare module 'vue/types/vue' {
   // eslint-disable-next-line jsdoc/require-jsdoc
-  export interface ComponentCustomProperties {
+  export interface Vue {
     /**
      * The Vue GTM Plugin instance.
      */
     $gtm: GtmPlugin;
+  }
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  export interface VueConstructor<V extends Vue = Vue> {
+    /**
+     * The Vue GTM Plugin instance.
+     */
+    gtm: GtmPlugin;
   }
 }
 
 /**
  * Vue GTM Plugin.
  */
-export type VueGtmPlugin = Plugin;
+export type VueGtmPlugin = PluginObject<VueGtmUseOptions>;
 export { VueGtmUseOptions } from './config';
 
 const _default: VueGtmPlugin = { install };

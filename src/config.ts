@@ -1,5 +1,5 @@
 import type { GtmIdContainer, GtmQueryParams } from '@gtm-support/core';
-import type { Router } from 'vue-router';
+import type Router from 'vue-router';
 
 /**
  * Query parameter object that will be send to GTM.

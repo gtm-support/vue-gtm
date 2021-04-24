@@ -1,5 +1,6 @@
-import type { App } from 'vue';
-import VueGtm, { createGtm, useGtm } from '../src/index';
+import Vue from 'vue';
+import { CombinedVueInstance } from 'vue/types/vue';
+import VueGtm, { useGtm } from '../src/index';
 import { appendAppDivToBody, createAppWithComponent, resetDataLayer, resetHtml } from './vue-helper';
 
 describe('Default', () => {
@@ -17,7 +18,7 @@ describe('Default', () => {
   test('should throw Error if GTM-ID is invalid', () => {
     const validGtmId: string = 'GTM-X';
     const invalidGtmIds: string[] = ['GTM-x', 'a', 'gtm-a', 'Error: ', 'Error'];
-    const fakeVueInstance: App = (null as unknown) as App;
+    const fakeVueInstance: typeof Vue = (null as unknown) as typeof Vue;
     for (const invalidGtmId of invalidGtmIds) {
       const expectedErrorMessage: string = `GTM-ID '${invalidGtmId}' is not valid`;
       expect(() => {
@@ -38,7 +39,7 @@ describe('Default', () => {
     }
   });
 
-  test('should expose useGtm function', () => {
+  test.skip('should expose useGtm function', () => {
     expect(useGtm).toBeInstanceOf(Function);
 
     // If the plugin was not used, it returns undefined
@@ -46,9 +47,15 @@ describe('Default', () => {
 
     appendAppDivToBody();
     const { app } = createAppWithComponent();
-    app.use(createGtm({ id: 'GTM-DEMO' })).mount('#app');
+
+    Vue.use(VueGtm, { id: 'GTM-DEMO', enabled: false });
+
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
+      render: (h) => h(app)
+    }).$mount('#app');
 
     expect(useGtm()).toBeDefined();
-    expect(useGtm()).toStrictEqual(app.config.globalProperties.$gtm);
+    expect(useGtm()).toStrictEqual(vue.$gtm);
   });
 });
