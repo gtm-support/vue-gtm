@@ -1,6 +1,5 @@
-import { createGtm } from '../src/index';
-import type { DataLayerObject } from '../src/plugin';
-import VueGtmPlugin from '../src/plugin';
+import type { DataLayerObject } from '../src/index';
+import { createGtm, GtmPlugin as VueGtmPlugin } from '../src/index';
 import { appendAppDivToBody, createAppWithComponent, resetDataLayer, resetHtml } from './vue-helper';
 
 describe('Vue.use', () => {

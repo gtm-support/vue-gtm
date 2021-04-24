@@ -6,7 +6,12 @@
 
 [diff](https://github.com/gtm-support/vue-gtm/compare/1.0.0-alpha.1...1.0.0-alpha.2)
 
-- Update to `@gtm-support/core` `1.0.0-beta.2`
+- Use [@gtm-support/core](https://github.com/gtm-support/core) natively
+
+## BREAKING CHANGE
+
+The `id` parameter is now part of the options, therefor if you used the constructor you need to move the first argument into the second `option` argument.  
+Also some names changed here and there.
 
 # 1.0.0-alpha.1
 

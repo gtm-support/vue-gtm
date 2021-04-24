@@ -1,7 +1,25 @@
-import { assertIsGtmId, loadScript, LoadScriptOptions } from '@gtm-support/core';
+import type { GtmIdContainer, GtmQueryParams, GtmSupportOptions, LoadScriptOptions } from '@gtm-support/core';
+import { GtmSupport as GtmPlugin, loadScript } from '@gtm-support/core';
 import { App, nextTick, Plugin } from 'vue';
-import { DEFAULT_CONFIG, VueGtmContainer, VueGtmQueryParams, VueGtmUseOptions } from './config';
-import GtmPlugin from './plugin';
+import type { Router } from 'vue-router';
+
+/**
+ * Options passed to the plugin.
+ */
+export interface VueGtmUseOptions extends GtmSupportOptions {
+  /**
+   * Pass the router instance to automatically sync with router.
+   */
+  vueRouter?: Router;
+  /**
+   * Don't trigger events for specified router names (case insensitive).
+   */
+  ignoredViews?: string[];
+  /**
+   * Whether or not call `trackView` in `Vue.nextTick`.
+   */
+  trackOnNextTick?: boolean;
+}
 
 let gtmPlugin: GtmPlugin | undefined;
 
@@ -12,23 +30,11 @@ let gtmPlugin: GtmPlugin | undefined;
  * @param options Configuration options.
  */
 function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
-  if (Array.isArray(options.id)) {
-    for (const idOrObject of options.id) {
-      if (typeof idOrObject === 'string') {
-        assertIsGtmId(idOrObject);
-      } else {
-        assertIsGtmId(idOrObject.id);
-      }
-    }
-  } else {
-    assertIsGtmId(options.id);
-  }
-
   // Apply default configuration
-  options = { ...DEFAULT_CONFIG, ...options };
+  options = { trackOnNextTick: false, ...options };
 
   // Add to vue prototype and also from globals
-  gtmPlugin = new GtmPlugin(options.id, options);
+  gtmPlugin = new GtmPlugin(options);
   app.config.globalProperties.$gtm = gtmPlugin;
 
   // Handle vue-router if defined
@@ -39,7 +45,7 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
   // Load GTM script when enabled
   if (gtmPlugin.options.enabled && gtmPlugin.options.loadScript) {
     if (Array.isArray(options.id)) {
-      options.id.forEach((id: string | VueGtmContainer) => {
+      options.id.forEach((id: string | GtmIdContainer) => {
         if (typeof id === 'string') {
           loadScript(id, options as LoadScriptOptions);
         } else {
@@ -51,7 +57,7 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
             newConf.queryParams = {
               ...newConf.queryParams,
               ...id.queryParams
-            } as VueGtmQueryParams;
+            } as GtmQueryParams;
           }
 
           loadScript(id.id, newConf as LoadScriptOptions);
@@ -151,10 +157,22 @@ declare module '@vue/runtime-core' {
  * Vue GTM Plugin.
  */
 export type VueGtmPlugin = Plugin;
-export { VueGtmUseOptions } from './config';
 
 const _default: VueGtmPlugin = { install };
 
+export {
+  assertIsGtmId,
+  DataLayerObject,
+  GtmIdContainer,
+  GtmQueryParams,
+  GtmSupport,
+  GtmSupportOptions,
+  hasScript,
+  loadScript,
+  LoadScriptOptions,
+  TrackEventOptions
+} from '@gtm-support/core';
+export { GtmPlugin };
 export default _default;
 
 /**
