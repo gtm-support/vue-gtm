@@ -1,5 +1,4 @@
-import { assertIsGtmId } from '@gtm-support/core/lib/assertIsGtmId';
-import { loadScript, LoadScriptOptions } from '@gtm-support/core/lib/index';
+import { assertIsGtmId, loadScript, LoadScriptOptions } from '@gtm-support/core';
 import { App, nextTick, Plugin } from 'vue';
 import { DEFAULT_CONFIG, VueGtmContainer, VueGtmQueryParams, VueGtmUseOptions } from './config';
 import GtmPlugin from './plugin';

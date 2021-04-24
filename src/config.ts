@@ -1,4 +1,4 @@
-import type { GtmIdContainer, GtmQueryParams } from '@gtm-support/core/lib/GtmContainer';
+import type { GtmIdContainer, GtmQueryParams } from '@gtm-support/core';
 import type { Router } from 'vue-router';
 
 /**

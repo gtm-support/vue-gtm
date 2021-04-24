@@ -1,5 +1,4 @@
-import { GtmSupport, TrackEventOptions } from '@gtm-support/core';
-import { DataLayerObject } from '@gtm-support/core/lib/DataLayerObject';
+import { DataLayerObject, GtmSupport, TrackEventOptions } from '@gtm-support/core';
 import { DEFAULT_CONFIG, VueGtmContainer, VueGtmUseOptions } from './config';
 
 /**
@@ -77,5 +76,5 @@ export default class VueGtmPlugin implements GtmSupport {
   }
 }
 
-export { DataLayerObject } from '@gtm-support/core/lib/DataLayerObject';
+export { DataLayerObject } from '@gtm-support/core';
 export { VueGtmPlugin };

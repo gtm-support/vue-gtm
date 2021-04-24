@@ -56,7 +56,7 @@
     "tsconfig.json"
   ],
   "dependencies": {
-    "@gtm-support/core": "^1.0.0-alpha.1"
+    "@gtm-support/core": "^1.0.0-beta.2"
   },
   "devDependencies": {
     "@types/jest": "~26.0.22",
