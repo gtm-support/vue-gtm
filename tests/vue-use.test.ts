@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import { CombinedVueInstance, ExtendedVue } from 'vue/types/vue';
-import VueGtm from '../src/index';
-import type { DataLayerObject } from '../src/plugin';
-import VueGtmPlugin from '../src/plugin';
+import VueGtm, { DataLayerObject, GtmPlugin as VueGtmPlugin } from '../src/index';
 import { appendAppDivToBody, createAppWithComponent, resetDataLayer, resetHtml } from './vue-helper';
 
 // TODO: Find out why Vue in vue-2 is undefined
