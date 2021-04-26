@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.0.0-alpha.2-vue2...vue2-gtm)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.0.0-alpha.3-vue2...vue2-gtm)
+
+# 1.0.0-alpha.3
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.0.0-alpha.2-vue2...1.0.0-alpha.3-vue2)
+
+- Update to [@gtm-support/core v1.0.0-alpha.3](https://github.com/gtm-support/core/releases/tag/1.0.0-alpha.3)
 
 # 1.0.0-alpha.2
 
