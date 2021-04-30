@@ -317,10 +317,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@gtm-support/core@1.0.0-alpha.3":
-  version "1.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@gtm-support/core/-/core-1.0.0-alpha.3.tgz#09e87c6945369e30edcb4ebafc7c2417bf13814d"
-  integrity sha512-ziwNnjP7j8Leve/qyGJEHpiizlV7lIbie4rgy0vR+V2q7KZaHRzvdNZX1XGLG/U6u4xoAED4GM7hO76DNut+/Q==
+"@gtm-support/core@1.0.0-beta.2":
+  version "1.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@gtm-support/core/-/core-1.0.0-beta.2.tgz#1ee39bdc50685fbc4cb372d2983cdaf774e926a2"
+  integrity sha512-jGtI0ayXWx31gEtpQRIHpDxQCP5LljlVnobDQSLi5hQEZ2tGsx3TgHU/I64ol7FX2ve8lXnK1T//ZjKfOQTp4Q==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
