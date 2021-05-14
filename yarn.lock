@@ -302,10 +302,14 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@es-joy/jsdoccomment@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.1.1.tgz#23c54b8803cd10a2455385a5b2d7c27d6b55c36d"
-  integrity sha512-6lIx5Pjc50D7VJU9lfRZ1twfIrIwQk+aeT9Ink2C07IUu/y9pxkIpDqmhY/VN3jAW42dA5z6ioOdyhOZZU1isw==
+"@es-joy/jsdoccomment@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@es-joy/jsdoccomment/-/jsdoccomment-0.4.4.tgz#8a25154156edbfc29e310943ebb17ee29122c9df"
+  integrity sha512-ua4qDt9dQb4qt5OI38eCZcQZYE5Bq3P0GzgvDARdT8Lt0mAUpxKTPy8JGGqEvF77tG1irKDZ3WreeezEa3P43w==
+  dependencies:
+    comment-parser "^1.1.5"
+    esquery "^1.4.0"
+    jsdoctypeparser "^9.0.0"
 
 "@eslint/eslintrc@^0.4.0":
   version "0.4.0"
@@ -1254,7 +1258,7 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-comment-parser@1.1.5:
+comment-parser@1.1.5, comment-parser@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/comment-parser/-/comment-parser-1.1.5.tgz#453627ef8f67dbcec44e79a9bd5baa37f0bce9b2"
   integrity sha512-RePCE4leIhBlmrqiYTvaqEeGYg7qpSl4etaIabKtdOQVi+mSTIBBklGUwIr79GXYnl3LpMwmDw4KeR2stNc6FA==
@@ -1522,14 +1526,15 @@ eslint-define-config@~1.0.8:
   resolved "https://registry.yarnpkg.com/eslint-define-config/-/eslint-define-config-1.0.8.tgz#56cb61f1bcba8ec7a29beec58a85d2ce9299297a"
   integrity sha512-Vfjv/3l112BQ0s+Ua+WGNxtEyxj++IaFCiBkhjT1wlBWtbHpuZcI0t8eCnJZnJrdv0b9n2GK0mcmQsPRRjVCXg==
 
-eslint-plugin-jsdoc@~33.0.0:
-  version "33.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-33.0.0.tgz#0aefe92706176b8c02c5a8ae721bf3b4705936a5"
-  integrity sha512-bkopnnuDdT04abKWPfDdD6XcAp2yX6UDpDViyvIdYmxbZYbpHXCRzQzLqCTo+SzWSTS0KFWz/V3shmmMr+x4EA==
+eslint-plugin-jsdoc@~34.2.1:
+  version "34.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsdoc/-/eslint-plugin-jsdoc-34.2.1.tgz#c344b70749775185872666a1907fae0fb27c7446"
+  integrity sha512-UXoA9g+CpECJzwDomJ5Dv9FSGblz7k9Bcn7M9/p6BWNTA9mShSAzCRvRmpVfY9z6SrdEc6ibiWUiJjvFgxIqTA==
   dependencies:
-    "@es-joy/jsdoccomment" "^0.1.1"
+    "@es-joy/jsdoccomment" "^0.4.4"
     comment-parser "1.1.5"
     debug "^4.3.1"
+    esquery "^1.4.0"
     jsdoctypeparser "^9.0.0"
     lodash "^4.17.21"
     regextras "^0.7.1"
