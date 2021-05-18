@@ -17,7 +17,7 @@ describe('Default', () => {
   test('should throw Error if GTM-ID is invalid', () => {
     const validGtmId: string = 'GTM-X';
     const invalidGtmIds: string[] = ['GTM-x', 'a', 'gtm-a', 'Error: ', 'Error'];
-    const fakeVueInstance: App = (null as unknown) as App;
+    const fakeVueInstance: App = null as unknown as App;
     for (const invalidGtmId of invalidGtmIds) {
       const expectedErrorMessage: string = `GTM-ID '${invalidGtmId}' is not valid`;
       expect(() => {
