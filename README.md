@@ -253,6 +253,11 @@ Disable debug mode
 this.$gtm.debug(false);
 ```
 
+## IE 11 support
+
+If you really need to support browsers like IE 11, you need to configure `transpileDependencies: ['@gtm-support/core']` in your `vue.config.js`.  
+See [gtm-support/core#20 (comment)](https://github.com/gtm-support/core/issues/20#issuecomment-855903062)
+
 ## Credits
 
 - [mib200 vue-gtm](https://github.com/mib200/vue-gtm)
