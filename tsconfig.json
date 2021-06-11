@@ -9,6 +9,7 @@
     "strict": true,
     "downlevelIteration": true,
     "declaration": true,
+    "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true
   },
   "include": ["src/**/*"],

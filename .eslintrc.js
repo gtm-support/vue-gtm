@@ -92,6 +92,7 @@ module.exports = defineConfig({
           'googletagmanager',
           'inheritdoc',
           'jsdoc',
+          'jsdom',
           'noninteraction',
           'nullish',
           'overridable',

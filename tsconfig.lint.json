@@ -6,6 +6,7 @@
     "rootDir": ".",
     "strict": true,
     "downlevelIteration": true,
+    "noImplicitOverride": true,
     "noUncheckedIndexedAccess": true,
     "noEmit": true
   },
