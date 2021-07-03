@@ -1,7 +1,7 @@
 import type { GtmIdContainer, GtmQueryParams, GtmSupportOptions, LoadScriptOptions } from '@gtm-support/core';
 import { GtmSupport as GtmPlugin, loadScript } from '@gtm-support/core';
 import { App, nextTick, Plugin } from 'vue';
-import type { Router } from 'vue-router';
+import type { RouteLocationNormalized, Router } from 'vue-router';
 
 /**
  * Options passed to the plugin.
@@ -14,7 +14,7 @@ export interface VueGtmUseOptions extends GtmSupportOptions {
   /**
    * Don't trigger events for specified router names (case insensitive).
    */
-  ignoredViews?: (string | RegExp)[];
+  ignoredViews?: (string | RegExp | ((route: RouteLocationNormalized) => boolean))[];
   /**
    * Whether or not call `trackView` in `Vue.nextTick`.
    */
@@ -104,20 +104,22 @@ async function initVueRouterGuard({
   }
 
   // Normalize routes name
-  const normalizedIgnoredViews: (string | RegExp)[] = ignoredViews.map((view) =>
-    view instanceof RegExp ? view : view.toLowerCase()
-  );
-  const shouldIgnoredView = (routeName: string): boolean => {
-    const found = normalizedIgnoredViews.find((ignoredView) =>
-      ignoredView instanceof RegExp ? ignoredView.test(routeName) : routeName.toLowerCase() === ignoredView
-    );
+  const normalizedIgnoredViews = ignoredViews.map((view) => (typeof view === 'string' ? view.toLowerCase() : view));
+  const shouldIgnoredView = (route: RouteLocationNormalized): boolean => {
+    return normalizedIgnoredViews.some((ignoredView) => {
+      const routeName = (route.name as string).toLowerCase();
 
-    return !!found;
+      return typeof ignoredView === 'string'
+        ? routeName === ignoredView
+        : typeof ignoredView === 'function'
+        ? ignoredView(route)
+        : ignoredView.test(routeName);
+    });
   };
 
   vueRouter.afterEach((to, from, failure) => {
     // Ignore some routes
-    if (typeof to.name !== 'string' || shouldIgnoredView(to.name)) {
+    if (typeof to.name !== 'string' || shouldIgnoredView(to)) {
       return;
     }
 
