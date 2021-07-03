@@ -14,7 +14,7 @@ export interface VueGtmUseOptions extends GtmSupportOptions {
   /**
    * Don't trigger events for specified router names (case insensitive).
    */
-  ignoredViews?: (string | RegExp | ((route: RouteLocationNormalized) => boolean))[];
+  ignoredViews?: string[] | ((route: RouteLocationNormalized) => boolean);
   /**
    * Whether or not call `trackView` in `Vue.nextTick`.
    */
@@ -103,18 +103,13 @@ async function initVueRouterGuard({
     return;
   }
 
-  // Normalize routes name
-  const normalizedIgnoredViews = ignoredViews.map((view) => (typeof view === 'string' ? view.toLowerCase() : view));
   const shouldIgnoredView = (route: RouteLocationNormalized): boolean => {
-    return normalizedIgnoredViews.some((ignoredView) => {
-      const routeName = (route.name as string).toLowerCase();
+    const routeName = (route.name as string).toLowerCase();
 
-      return typeof ignoredView === 'string'
-        ? routeName === ignoredView
-        : typeof ignoredView === 'function'
-        ? ignoredView(route)
-        : ignoredView.test(routeName);
-    });
+    return (
+      (Array.isArray(ignoredViews) && ignoredViews.indexOf(routeName) !== -1) ||
+      (typeof ignoredViews === 'function' && ignoredViews(route))
+    );
   };
 
   vueRouter.afterEach((to, from, failure) => {
