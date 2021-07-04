@@ -1,6 +1,18 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.0.0-vue2...vue2-gtm)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.1.0-vue2...vue2-gtm)
+
+# 1.1.0
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.0.0-vue2...1.1.0-vue2)
+
+- Ability to ignore views by callback ([#37])
+
+## BREAKING CHANGE
+
+- Ignore views is not case insensitive anymore
+
+[#37]: https://github.com/gtm-support/vue-gtm/pull/37
 
 # 1.0.0
 

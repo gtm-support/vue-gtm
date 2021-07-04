@@ -2,6 +2,7 @@ import type { GtmIdContainer, GtmQueryParams, GtmSupportOptions, LoadScriptOptio
 import { GtmSupport as GtmPlugin, loadScript } from '@gtm-support/core';
 import _Vue, { PluginObject } from 'vue';
 import type Router from 'vue-router';
+import type { Route } from 'vue-router';
 
 /**
  * Options passed to the plugin.
@@ -12,9 +13,9 @@ export interface VueGtmUseOptions extends GtmSupportOptions {
    */
   vueRouter?: Router;
   /**
-   * Don't trigger events for specified router names (case insensitive).
+   * Don't trigger events for specified router names.
    */
-  ignoredViews?: string[];
+  ignoredViews?: string[] | ((to: Route, from: Route) => boolean);
   /**
    * Whether or not call `trackView` in `Vue.nextTick`.
    */
@@ -88,12 +89,13 @@ function initVueRouterGuard(
     return;
   }
 
-  // Flatten routes name
-  ignoredViews = ignoredViews.map((view) => view.toLowerCase());
-
-  vueRouter.afterEach((to) => {
+  vueRouter.afterEach((to, from) => {
     // Ignore some routes
-    if (typeof to.name !== 'string' || ignoredViews.indexOf(to.name.toLowerCase()) !== -1) {
+    if (
+      typeof to.name !== 'string' ||
+      (Array.isArray(ignoredViews) && ignoredViews.includes(to.name)) ||
+      (typeof ignoredViews === 'function' && ignoredViews(to, from))
+    ) {
       return;
     }
 
