@@ -39,12 +39,7 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
 
   // Handle vue-router if defined
   if (options.vueRouter) {
-    void initVueRouterGuard({
-      app,
-      vueRouter: options.vueRouter,
-      ignoredViews: options.ignoredViews,
-      trackOnNextTick: options.trackOnNextTick
-    });
+    void initVueRouterGuard(app, options.vueRouter, options.ignoredViews, options.trackOnNextTick);
   }
 
   // Load GTM script when enabled
@@ -84,17 +79,12 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
  * @param ignoredViews An array of route name that will be ignored.
  * @param trackOnNextTick Whether or not to call `trackView` in `Vue.nextTick`.
  */
-async function initVueRouterGuard({
-  app,
-  vueRouter,
-  ignoredViews = [],
-  trackOnNextTick = false
-}: {
-  app: App;
-  vueRouter: NonNullable<VueGtmUseOptions['vueRouter']>;
-  ignoredViews?: NonNullable<VueGtmUseOptions['ignoredViews']>;
-  trackOnNextTick?: NonNullable<VueGtmUseOptions['trackOnNextTick']>;
-}): Promise<void> {
+async function initVueRouterGuard(
+  app: App,
+  vueRouter: Exclude<VueGtmUseOptions['vueRouter'], undefined>,
+  ignoredViews: VueGtmUseOptions['ignoredViews'] = [],
+  trackOnNextTick: VueGtmUseOptions['trackOnNextTick']
+): Promise<void> {
   let vueRouterModule: typeof import('vue-router');
   try {
     vueRouterModule = await import('vue-router');
