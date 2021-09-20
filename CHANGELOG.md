@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.1.0...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.0...main)
+
+# 1.2.0
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.1.0...1.2.0)
+
+- Upgrade `core` to [1.1.0](https://github.com/gtm-support/core/releases/tag/1.1.0)
 
 # 1.1.0
 
