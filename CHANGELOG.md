@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.0...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.1...main)
+
+# 1.2.1
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.0...1.2.1)
+
+- Fix optional `vue-router` peer dependency
 
 # 1.2.0
 
