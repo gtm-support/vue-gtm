@@ -2781,10 +2781,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier-plugin-organize-imports@~2.3.3:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-organize-imports/-/prettier-plugin-organize-imports-2.3.3.tgz#6877bcf8ca02569198d8f419c954a0d90a95de15"
-  integrity sha512-PBOwQ8vEIB2b7B3gCuBG7D+dqsr1fsTR4TSAjNacRVdHJrD0yzgz9grOLPSyfwJm+NUTZLyWeHoZ+1mHaUrk+g==
+prettier-plugin-organize-imports@~2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-organize-imports/-/prettier-plugin-organize-imports-2.3.4.tgz#65473861ae5ab7960439fff270a2258558fbe9ba"
+  integrity sha512-R8o23sf5iVL/U71h9SFUdhdOEPsi3nm42FD/oDYIZ2PQa4TNWWuWecxln6jlIQzpZTDMUeO1NicJP6lLn2TtRw==
 
 prettier@2.4.1:
   version "2.4.1"
@@ -3276,7 +3276,7 @@ v8-to-istanbul@^8.0.0:
     convert-source-map "^1.6.0"
     source-map "^0.7.3"
 
-vue-router@^4.0.11:
+vue-router@^4.0.0:
   version "4.0.11"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.0.11.tgz#cd649a0941c635281763a20965b599643ddc68ed"
   integrity sha512-sha6I8fx9HWtvTrFZfxZkiQQBpqSeT+UCwauYjkdOQYRvwsGwimlQQE2ayqUwuuXGzquFpCPoXzYKWlzL4OuXg==
