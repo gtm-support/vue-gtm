@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.1...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.2...main)
+
+# 1.2.2
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.1...1.2.2)
+
+- Make `vue-router` optional, for real this time...
 
 # 1.2.1
 
