@@ -64,7 +64,7 @@
     "@typescript-eslint/parser": "~4.31.2",
     "eslint": "~7.32.0",
     "eslint-config-prettier": "~8.3.0",
-    "eslint-define-config": "~1.0.9",
+    "eslint-define-config": "~1.1.2",
     "eslint-plugin-jsdoc": "~36.1.0",
     "eslint-plugin-prettier": "~4.0.0",
     "eslint-plugin-spellcheck": "~0.0.19",
