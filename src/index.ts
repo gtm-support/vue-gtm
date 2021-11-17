@@ -37,8 +37,8 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
   gtmPlugin = new GtmPlugin(options);
   app.config.globalProperties.$gtm = gtmPlugin;
 
-   // Check if plugin is running in a real browser or e.g. in SSG mode
-   if (gtmPlugin.isInBrowserContext()) {
+  // Check if plugin is running in a real browser or e.g. in SSG mode
+  if (gtmPlugin.isInBrowserContext()) {
     // Handle vue-router if defined
     if (options.vueRouter) {
       void initVueRouterGuard(app, options.vueRouter, options.ignoredViews, options.trackOnNextTick);
