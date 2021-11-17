@@ -43,7 +43,7 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
   }
 
   // Load GTM script when enabled
-  if (gtmPlugin.options.enabled && gtmPlugin.options.loadScript) {
+  if (gtmPlugin.isInBrowserContext() && gtmPlugin.options.enabled && gtmPlugin.options.loadScript) {
     if (Array.isArray(options.id)) {
       options.id.forEach((id: string | GtmIdContainer) => {
         if (typeof id === 'string') {
