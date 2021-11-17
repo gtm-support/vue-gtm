@@ -37,34 +37,37 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
   gtmPlugin = new GtmPlugin(options);
   app.config.globalProperties.$gtm = gtmPlugin;
 
-  // Handle vue-router if defined
-  if (options.vueRouter) {
-    void initVueRouterGuard(app, options.vueRouter, options.ignoredViews, options.trackOnNextTick);
-  }
+   // Check if plugin is running in a real browser or e.g. in SSG mode
+   if (gtmPlugin.isInBrowserContext()) {
+    // Handle vue-router if defined
+    if (options.vueRouter) {
+      void initVueRouterGuard(app, options.vueRouter, options.ignoredViews, options.trackOnNextTick);
+    }
 
-  // Load GTM script when enabled
-  if (gtmPlugin.isInBrowserContext() && gtmPlugin.options.enabled && gtmPlugin.options.loadScript) {
-    if (Array.isArray(options.id)) {
-      options.id.forEach((id: string | GtmIdContainer) => {
-        if (typeof id === 'string') {
-          loadScript(id, options as LoadScriptOptions);
-        } else {
-          const newConf: VueGtmUseOptions = {
-            ...options
-          };
+    // Load GTM script when enabled
+    if (gtmPlugin.options.enabled && gtmPlugin.options.loadScript) {
+      if (Array.isArray(options.id)) {
+        options.id.forEach((id: string | GtmIdContainer) => {
+          if (typeof id === 'string') {
+            loadScript(id, options as LoadScriptOptions);
+          } else {
+            const newConf: VueGtmUseOptions = {
+              ...options
+            };
 
-          if (id.queryParams != null) {
-            newConf.queryParams = {
-              ...newConf.queryParams,
-              ...id.queryParams
-            } as GtmQueryParams;
+            if (id.queryParams != null) {
+              newConf.queryParams = {
+                ...newConf.queryParams,
+                ...id.queryParams
+              } as GtmQueryParams;
+            }
+
+            loadScript(id.id, newConf as LoadScriptOptions);
           }
-
-          loadScript(id.id, newConf as LoadScriptOptions);
-        }
-      });
-    } else {
-      loadScript(options.id, options as LoadScriptOptions);
+        });
+      } else {
+        loadScript(options.id, options as LoadScriptOptions);
+      }
     }
   }
 
