@@ -147,6 +147,7 @@ export function createGtm(options: VueGtmUseOptions): VueGtmPlugin {
   return { install: (app: App) => install(app, options) };
 }
 
+// @ts-expect-error: assume that `vue` already brings this dependency
 declare module '@vue/runtime-core' {
   // eslint-disable-next-line jsdoc/require-jsdoc
   export interface ComponentCustomProperties {
