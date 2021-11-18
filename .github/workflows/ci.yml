@@ -15,9 +15,9 @@ jobs:
         node_version: [12, 14, 16]
         include:
           - os: macos-latest
-            node_version: 14
+            node_version: 16
           - os: windows-latest
-            node_version: 14
+            node_version: 16
       fail-fast: false
 
     name: 'Build&Test: node-${{ matrix.node_version }}, ${{ matrix.os }}'
@@ -25,40 +25,57 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
+
       - name: Set node version to ${{ matrix.node_version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node_version }}
+          cache: 'pnpm'
 
       - name: Versions
-        run: yarn versions
+        run: |
+          echo "pnpm: $(pnpm --version)"
+          echo "npm : $(npm --version)"
+          echo "node: $(node --version)"
+          echo "process.versions:"
+          node -p process.versions
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: pnpm run build
 
       - name: Test
-        run: yarn test --ci --silent --reporters=default
+        run: pnpm run test --silent
 
   lint:
     runs-on: ubuntu-latest
-    name: 'Lint: node-14, ubuntu-latest'
+    name: 'Lint: node-16, ubuntu-latest'
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
-      - name: Set node version to 14
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 6
+
+      - name: Set node version to 16
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 16
+          cache: 'pnpm'
 
       - name: Prepare
         run: |
-          yarn install --frozen-lockfile
-          yarn build
+          pnpm install --frozen-lockfile
+          pnpm run build
 
       - name: Lint
-        run: yarn lint
+        run: pnpm run lint

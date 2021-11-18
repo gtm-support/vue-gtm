@@ -112,6 +112,7 @@ module.exports = defineConfig({
       files: ['tests/*'],
       rules: {
         '@typescript-eslint/unbound-method': 'off',
+        'jsdoc/check-tag-names': 'off',
         'jsdoc/require-jsdoc': 'off'
       }
     }

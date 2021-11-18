@@ -17,12 +17,12 @@
   "license": "MIT",
   "homepage": "https://github.com/gtm-support/vue-gtm/tree/vue2-gtm",
   "scripts": {
-    "clean": "rm -Rf dist yarn.lock node_modules",
+    "clean": "rm -Rf dist pnpm-lock.yaml node_modules",
     "build": "tsc",
     "format": "prettier --write .",
     "lint": "eslint .",
     "test": "jest",
-    "prepublishOnly": "yarn clean && yarn install --cache-folder .yarn && yarn build"
+    "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
   },
   "repository": {
     "type": "git",
@@ -59,25 +59,26 @@
     "@gtm-support/core": "1.1.0"
   },
   "devDependencies": {
-    "@types/jest": "~27.0.1",
-    "@typescript-eslint/eslint-plugin": "~4.31.1",
-    "@typescript-eslint/parser": "~4.31.1",
-    "eslint": "~7.32.0",
+    "@types/jest": "~27.0.2",
+    "@typescript-eslint/eslint-plugin": "~5.4.0",
+    "@typescript-eslint/parser": "~5.4.0",
+    "eslint": "~8.2.0",
     "eslint-config-prettier": "~8.3.0",
-    "eslint-define-config": "~1.0.9",
-    "eslint-plugin-jsdoc": "~36.1.0",
+    "eslint-define-config": "~1.1.3",
+    "eslint-plugin-jsdoc": "~37.0.3",
     "eslint-plugin-prettier": "~4.0.0",
     "eslint-plugin-spellcheck": "~0.0.19",
-    "jest": "~27.2.0",
-    "jest-junit": "~12.2.0",
+    "jest": "~27.3.1",
+    "jest-junit": "~13.0.0",
     "prettier": "2.4.1",
-    "prettier-plugin-organize-imports": "~2.3.3",
-    "ts-jest": "~27.0.5",
-    "typescript": "~4.4.3",
+    "prettier-plugin-organize-imports": "~2.3.4",
+    "ts-jest": "~27.0.7",
+    "typescript": "~4.5.2",
     "vue": "^2.6.14",
-    "vue-router": "^3.5.2"
+    "vue-router": "^3.5.3"
   },
   "peerDependencies": {
-    "vue": "^2.6.12"
-  }
+    "vue": "^2.6.14"
+  },
+  "packageManager": "pnpm@6.22.2"
 }

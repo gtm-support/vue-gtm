@@ -151,7 +151,7 @@ This feature will generate the view name according to a priority rule:
 - If you defined a meta field for your route named `gtm` this will take the value of this field for the view name.
 - Otherwise, if the plugin don't have a value for the `meta.gtm` it will fallback to the internal route name.
 
-Most of teh time the second case is enough, but sometimes you want to have more control on what is sent, this is where the first rule shine.
+Most of the time the second case is enough, but sometimes you want to have more control on what is sent, this is where the first rule shine.
 
 Example:
 
@@ -165,6 +165,25 @@ const myRoute = {
 ```
 
 > This will use `MyCustomValue` as the view name.
+
+### Passing custom properties with page view events
+
+If your GTM setup expects custom data to be sent as part of your page views, you can add desired properties to your route definitions via the `meta.gtmAdditionalEventData` property.
+
+Example:
+
+```js
+const myRoute = {
+  path: 'myRoute',
+  name: 'myRouteName',
+  component: SomeComponent,
+  meta: { gtmAdditionalEventData: { routeCategory: 'INFO' } }
+};
+```
+
+> This sends the property `routeCategory` with the value 'INFO' as part of your page view event for that route.
+
+Note that the properties `event`, `content-name` and `content-view-name` are always overridden.
 
 ## Using with composition API
 
