@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.2...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.3...main)
+
+# 1.2.3
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.2...1.2.3)
+
+- Detect if running in browser context ([#97])
+
+[#97]: https://github.com/gtm-support/vue-gtm/pull/97
 
 # 1.2.2
 
