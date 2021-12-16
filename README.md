@@ -191,6 +191,26 @@ const myRoute = {
 
 Note that the properties `event`, `content-name` and `content-view-name` are always overridden.
 
+### Passing dynamic properties with page view events
+
+If you need to pass dynamic properties as part of your page views, you can set a callback that derives the custom data after navigation.
+
+Example:
+
+```js
+createGtm({
+  // ...other options
+  vueRouter: router,
+  vueRouterAdditionalEventData: () => ({
+    someComputedProperty: computeProperty()
+  })
+});
+```
+
+> This computes and sends the property `someComputedProperty` as part of your page view event after every navigation.
+
+Note that a property with the same name on route level will override this.
+
 ## Using with composition API
 
 In order to use this plugin with composition API (inside your `setup` method), you can just call the custom composable `useGtm`.

@@ -12,6 +12,13 @@ export interface VueGtmUseOptions extends GtmSupportOptions {
    */
   vueRouter?: Router;
   /**
+   * Derive additional event data after navigation.
+   */
+  vueRouterAdditionalEventData?: (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized
+  ) => Record<string, any> | Promise<Record<string, any>>;
+  /**
    * Don't trigger events for specified router names.
    */
   ignoredViews?: string[] | ((to: RouteLocationNormalized, from: RouteLocationNormalized) => boolean);
@@ -41,7 +48,13 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
   if (gtmPlugin.isInBrowserContext()) {
     // Handle vue-router if defined
     if (options.vueRouter) {
-      void initVueRouterGuard(app, options.vueRouter, options.ignoredViews, options.trackOnNextTick);
+      void initVueRouterGuard(
+        app,
+        options.vueRouter,
+        options.ignoredViews,
+        options.trackOnNextTick,
+        options.vueRouterAdditionalEventData
+      );
     }
 
     // Load GTM script when enabled
@@ -81,12 +94,14 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
  * @param vueRouter The Vue router instance to attach the guard.
  * @param ignoredViews An array of route name that will be ignored.
  * @param trackOnNextTick Whether or not to call `trackView` in `Vue.nextTick`.
+ * @param deriveAdditionalEventData Callback to derive additional event data.
  */
 async function initVueRouterGuard(
   app: App,
   vueRouter: Exclude<VueGtmUseOptions['vueRouter'], undefined>,
   ignoredViews: VueGtmUseOptions['ignoredViews'] = [],
-  trackOnNextTick: VueGtmUseOptions['trackOnNextTick']
+  trackOnNextTick: VueGtmUseOptions['trackOnNextTick'],
+  deriveAdditionalEventData: VueGtmUseOptions['vueRouterAdditionalEventData'] = () => ({})
 ): Promise<void> {
   let vueRouterModule: typeof import('vue-router');
   try {
@@ -96,7 +111,7 @@ async function initVueRouterGuard(
     return;
   }
 
-  vueRouter.afterEach((to, from, failure) => {
+  vueRouter.afterEach(async (to, from, failure) => {
     // Ignore some routes
     if (
       typeof to.name !== 'string' ||
@@ -119,7 +134,10 @@ async function initVueRouterGuard(
       }
     }
 
-    const additionalEventData: Record<string, any> = (to.meta?.gtmAdditionalEventData as Record<string, any>) ?? {};
+    const additionalEventData: Record<string, any> = {
+      ...(await deriveAdditionalEventData(to, from)),
+      ...(to.meta?.gtmAdditionalEventData as Record<string, any>)
+    };
     const baseUrl: string = vueRouter.options?.history?.base ?? '';
     let fullUrl: string = baseUrl;
     if (!fullUrl.endsWith('/')) {

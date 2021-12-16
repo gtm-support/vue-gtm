@@ -1,6 +1,12 @@
 import type { DataLayerObject } from '../src/index';
 import { createGtm, GtmPlugin as VueGtmPlugin } from '../src/index';
-import { appendAppDivToBody, createAppWithComponent, resetDataLayer, resetHtml } from './vue-helper';
+import {
+  appendAppDivToBody,
+  createAppWithComponent,
+  createAppWithRouter,
+  resetDataLayer,
+  resetHtml
+} from './vue-helper';
 
 describe('Vue.use', () => {
   afterEach(() => {
@@ -258,5 +264,235 @@ describe('Vue.use', () => {
         })
       ])
     );
+  });
+
+  describe('router', () => {
+    test('should add additional event after navigation', async () => {
+      appendAppDivToBody();
+      const { app, router } = createAppWithRouter([
+        {
+          name: 'Home',
+          path: '/',
+          component: {
+            template: '<div>Home</div>'
+          },
+          meta: {
+            gtmAdditionalEventData: {
+              someProperty: 'home-value'
+            }
+          }
+        },
+        {
+          name: 'About',
+          path: '/about',
+          component: {
+            template: '<div>About</div>'
+          },
+          meta: {
+            gtmAdditionalEventData: {
+              someProperty: 'about-value'
+            }
+          }
+        }
+      ]);
+      app
+        .use(
+          createGtm({
+            id: 'GTM-DEMO',
+            vueRouter: router
+          })
+        )
+        .mount('#app');
+      await router.push('/about');
+      expect(window['dataLayer']).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            event: 'gtm.js',
+            'gtm.start': expect.any(Number)
+          }),
+          expect.objectContaining({
+            'content-name': '/',
+            'content-view-name': 'Home',
+            event: 'content-view',
+            someProperty: 'home-value'
+          }),
+          expect.objectContaining({
+            'content-name': '/about',
+            'content-view-name': 'About',
+            event: 'content-view',
+            someProperty: 'about-value'
+          })
+        ])
+      );
+    });
+
+    test('should derive additional event data after navigation', async () => {
+      appendAppDivToBody();
+      const { app, router } = createAppWithRouter([
+        {
+          name: 'Home',
+          path: '/',
+          component: {
+            template: '<div>Home</div>'
+          }
+        },
+        {
+          name: 'About',
+          path: '/about',
+          component: {
+            template: '<div>About</div>'
+          }
+        }
+      ]);
+      app
+        .use(
+          createGtm({
+            id: 'GTM-DEMO',
+            vueRouter: router,
+            vueRouterAdditionalEventData: () => ({
+              someProperty: 'some-value'
+            })
+          })
+        )
+        .mount('#app');
+      await router.push('/about');
+      expect(window['dataLayer']).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            event: 'gtm.js',
+            'gtm.start': expect.any(Number)
+          }),
+          expect.objectContaining({
+            'content-name': '/',
+            'content-view-name': 'Home',
+            event: 'content-view',
+            someProperty: 'some-value'
+          }),
+          expect.objectContaining({
+            'content-name': '/about',
+            'content-view-name': 'About',
+            event: 'content-view',
+            someProperty: 'some-value'
+          })
+        ])
+      );
+    });
+
+    test('should asynchronously derive additional event data after navigation', async () => {
+      appendAppDivToBody();
+      const { app, router } = createAppWithRouter([
+        {
+          name: 'Home',
+          path: '/',
+          component: {
+            template: '<div>Home</div>'
+          }
+        },
+        {
+          name: 'About',
+          path: '/about',
+          component: {
+            template: '<div>About</div>'
+          }
+        }
+      ]);
+      app
+        .use(
+          createGtm({
+            id: 'GTM-DEMO',
+            vueRouter: router,
+            vueRouterAdditionalEventData: () =>
+              Promise.resolve({
+                someProperty: 'some-async-value'
+              })
+          })
+        )
+        .mount('#app');
+      await router.push('/about');
+      // flush pending promises
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(window['dataLayer']).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            event: 'gtm.js',
+            'gtm.start': expect.any(Number)
+          }),
+          expect.objectContaining({
+            'content-name': '/',
+            'content-view-name': 'Home',
+            event: 'content-view',
+            someProperty: 'some-async-value'
+          }),
+          expect.objectContaining({
+            'content-name': '/about',
+            'content-view-name': 'About',
+            event: 'content-view',
+            someProperty: 'some-async-value'
+          })
+        ])
+      );
+    });
+
+    test('should override derived additional event data with route level event data', async () => {
+      appendAppDivToBody();
+      const { app, router } = createAppWithRouter([
+        {
+          name: 'Home',
+          path: '/',
+          component: {
+            template: '<div>Home</div>'
+          },
+          meta: {
+            gtmAdditionalEventData: {
+              someProperty: 'home-value'
+            }
+          }
+        },
+        {
+          name: 'About',
+          path: '/about',
+          component: {
+            template: '<div>About</div>'
+          },
+          meta: {
+            gtmAdditionalEventData: {
+              someProperty: 'about-value'
+            }
+          }
+        }
+      ]);
+      app
+        .use(
+          createGtm({
+            id: 'GTM-DEMO',
+            vueRouter: router,
+            vueRouterAdditionalEventData: () => ({
+              someProperty: 'some-value'
+            })
+          })
+        )
+        .mount('#app');
+      await router.push('/about');
+      expect(window['dataLayer']).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            event: 'gtm.js',
+            'gtm.start': expect.any(Number)
+          }),
+          expect.objectContaining({
+            'content-name': '/',
+            'content-view-name': 'Home',
+            event: 'content-view',
+            someProperty: 'home-value'
+          }),
+          expect.objectContaining({
+            'content-name': '/about',
+            'content-view-name': 'About',
+            event: 'content-view',
+            someProperty: 'about-value'
+          })
+        ])
+      );
+    });
   });
 });
