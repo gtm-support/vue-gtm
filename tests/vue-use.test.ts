@@ -378,6 +378,61 @@ describe('Vue.use', () => {
       );
     });
 
+    test('should asynchronously derive additional event data after navigation', async () => {
+      appendAppDivToBody();
+      const { app, router } = createAppWithRouter([
+        {
+          name: 'Home',
+          path: '/',
+          component: {
+            template: '<div>Home</div>'
+          }
+        },
+        {
+          name: 'About',
+          path: '/about',
+          component: {
+            template: '<div>About</div>'
+          }
+        }
+      ]);
+      app
+        .use(
+          createGtm({
+            id: 'GTM-DEMO',
+            vueRouter: router,
+            vueRouterAdditionalEventData: () =>
+              Promise.resolve({
+                someProperty: 'some-async-value'
+              })
+          })
+        )
+        .mount('#app');
+      await router.push('/about');
+      // flush pending promises
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(window['dataLayer']).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            event: 'gtm.js',
+            'gtm.start': expect.any(Number)
+          }),
+          expect.objectContaining({
+            'content-name': '/',
+            'content-view-name': 'Home',
+            event: 'content-view',
+            someProperty: 'some-async-value'
+          }),
+          expect.objectContaining({
+            'content-name': '/about',
+            'content-view-name': 'About',
+            event: 'content-view',
+            someProperty: 'some-async-value'
+          })
+        ])
+      );
+    });
+
     test('should override derived additional event data with route level event data', async () => {
       appendAppDivToBody();
       const { app, router } = createAppWithRouter([
