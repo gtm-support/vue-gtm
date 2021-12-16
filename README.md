@@ -193,7 +193,7 @@ Note that the properties `event`, `content-name` and `content-view-name` are alw
 
 ### Passing dynamic properties with page view events
 
-If you need to pass dynamic properties as parto of your page views, you can set a callback that derives the custom data after navigation.
+If you need to pass dynamic properties as part of your page views, you can set a callback that derives the custom data after navigation.
 
 Example:
 
