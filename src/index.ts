@@ -14,7 +14,10 @@ export interface VueGtmUseOptions extends GtmSupportOptions {
   /**
    * Derive additional event data after navigation.
    */
-  vueRouterAdditionalEventData?: (to: RouteLocationNormalized, from: RouteLocationNormalized) => Record<string, any>;
+  vueRouterAdditionalEventData?: (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized
+  ) => Record<string, any> | Promise<Record<string, any>>;
   /**
    * Don't trigger events for specified router names.
    */
@@ -108,7 +111,7 @@ async function initVueRouterGuard(
     return;
   }
 
-  vueRouter.afterEach((to, from, failure) => {
+  vueRouter.afterEach(async (to, from, failure) => {
     // Ignore some routes
     if (
       typeof to.name !== 'string' ||
@@ -132,7 +135,7 @@ async function initVueRouterGuard(
     }
 
     const additionalEventData: Record<string, any> = {
-      ...deriveAdditionalEventData(to, from),
+      ...(await deriveAdditionalEventData(to, from)),
       ...(to.meta?.gtmAdditionalEventData as Record<string, any>)
     };
     const baseUrl: string = vueRouter.options?.history?.base ?? '';
