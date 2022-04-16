@@ -1,11 +1,12 @@
-import type { DataLayerObject } from '../src/index';
-import { createGtm, GtmPlugin as VueGtmPlugin } from '../src/index';
+import { afterEach, describe, expect, test } from 'vitest';
+import type { DataLayerObject, GtmPlugin as VueGtmPlugin } from '../src/index';
+import { createGtm } from '../src/index';
 import {
   appendAppDivToBody,
   createAppWithComponent,
   createAppWithRouter,
   resetDataLayer,
-  resetHtml
+  resetHtml,
 } from './vue-helper';
 
 describe('Vue.use', () => {
@@ -26,7 +27,9 @@ describe('Vue.use', () => {
     expect(window['dataLayer']).toBeDefined();
     expect(document.scripts.length).toBe(1);
     expect(document.scripts.item(0)).toBeDefined();
-    expect(document.scripts.item(0)?.src).toBe('https://www.googletagmanager.com/gtm.js?id=GTM-DEMO');
+    expect(document.scripts.item(0)?.src).toBe(
+      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO',
+    );
   });
 
   test('should append multiple google tag manager scripts to DOM', () => {
@@ -40,10 +43,24 @@ describe('Vue.use', () => {
       .use(
         createGtm({
           id: [
-            { id: 'GTM-DEMO', queryParams: { gtm_auth: 'abc123', gtm_preview: 'env-1', gtm_cookies_win: 'x' } },
-            { id: 'GTM-DEMO2', queryParams: { gtm_auth: 'abc234', gtm_preview: 'env-2', gtm_cookies_win: 'x' } }
-          ]
-        })
+            {
+              id: 'GTM-DEMO',
+              queryParams: {
+                gtm_auth: 'abc123',
+                gtm_preview: 'env-1',
+                gtm_cookies_win: 'x',
+              },
+            },
+            {
+              id: 'GTM-DEMO2',
+              queryParams: {
+                gtm_auth: 'abc234',
+                gtm_preview: 'env-2',
+                gtm_cookies_win: 'x',
+              },
+            },
+          ],
+        }),
       )
       .mount('#app');
 
@@ -51,10 +68,10 @@ describe('Vue.use', () => {
     expect(document.scripts.length).toBe(2);
     expect(document.scripts.item(0)).toBeDefined();
     expect(document.scripts.item(0)?.src).toBe(
-      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO&gtm_auth=abc123&gtm_preview=env-1&gtm_cookies_win=x'
+      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO&gtm_auth=abc123&gtm_preview=env-1&gtm_cookies_win=x',
     );
     expect(document.scripts.item(1)?.src).toBe(
-      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO2&gtm_auth=abc234&gtm_preview=env-2&gtm_cookies_win=x'
+      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO2&gtm_auth=abc234&gtm_preview=env-2&gtm_cookies_win=x',
     );
   });
 
@@ -88,7 +105,9 @@ describe('Vue.use', () => {
     expect(window['dataLayer']).toBeDefined();
     expect(document.scripts.length).toBe(1);
     expect(document.scripts.item(0)).toBeDefined();
-    expect(document.scripts.item(0)?.src).toBe('https://www.googletagmanager.com/gtm.js?id=GTM-DEMO');
+    expect(document.scripts.item(0)?.src).toBe(
+      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO',
+    );
   });
 
   describe('Check src.nonce', () => {
@@ -205,9 +224,9 @@ describe('Vue.use', () => {
     expect(window['dataLayer']).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          'user-id': 'user-123'
-        })
-      ])
+          'user-id': 'user-123',
+        }),
+      ]),
     );
   });
 
@@ -226,14 +245,14 @@ describe('Vue.use', () => {
       expect.arrayContaining([
         expect.objectContaining({
           event: 'gtm.js',
-          'gtm.start': expect.any(Number)
+          'gtm.start': expect.any(Number),
         }),
         expect.objectContaining({
           'content-name': 'Path',
           'content-view-name': 'ScreenName',
-          event: 'content-view'
-        })
-      ])
+          event: 'content-view',
+        }),
+      ]),
     );
   });
 
@@ -252,7 +271,7 @@ describe('Vue.use', () => {
       expect.arrayContaining([
         expect.objectContaining({
           event: 'gtm.js',
-          'gtm.start': expect.any(Number)
+          'gtm.start': expect.any(Number),
         }),
         expect.objectContaining({
           action: null,
@@ -260,9 +279,9 @@ describe('Vue.use', () => {
           'interaction-type': false,
           target: null,
           'target-properties': null,
-          value: null
-        })
-      ])
+          value: null,
+        }),
+      ]),
     );
   });
 
@@ -274,33 +293,33 @@ describe('Vue.use', () => {
           name: 'Home',
           path: '/',
           component: {
-            template: '<div>Home</div>'
+            template: '<div>Home</div>',
           },
           meta: {
             gtmAdditionalEventData: {
-              someProperty: 'home-value'
-            }
-          }
+              someProperty: 'home-value',
+            },
+          },
         },
         {
           name: 'About',
           path: '/about',
           component: {
-            template: '<div>About</div>'
+            template: '<div>About</div>',
           },
           meta: {
             gtmAdditionalEventData: {
-              someProperty: 'about-value'
-            }
-          }
-        }
+              someProperty: 'about-value',
+            },
+          },
+        },
       ]);
       app
         .use(
           createGtm({
             id: 'GTM-DEMO',
-            vueRouter: router
-          })
+            vueRouter: router,
+          }),
         )
         .mount('#app');
       await router.push('/about');
@@ -308,21 +327,21 @@ describe('Vue.use', () => {
         expect.arrayContaining([
           expect.objectContaining({
             event: 'gtm.js',
-            'gtm.start': expect.any(Number)
+            'gtm.start': expect.any(Number),
           }),
           expect.objectContaining({
             'content-name': '/',
             'content-view-name': 'Home',
             event: 'content-view',
-            someProperty: 'home-value'
+            someProperty: 'home-value',
           }),
           expect.objectContaining({
             'content-name': '/about',
             'content-view-name': 'About',
             event: 'content-view',
-            someProperty: 'about-value'
-          })
-        ])
+            someProperty: 'about-value',
+          }),
+        ]),
       );
     });
 
@@ -333,16 +352,16 @@ describe('Vue.use', () => {
           name: 'Home',
           path: '/',
           component: {
-            template: '<div>Home</div>'
-          }
+            template: '<div>Home</div>',
+          },
         },
         {
           name: 'About',
           path: '/about',
           component: {
-            template: '<div>About</div>'
-          }
-        }
+            template: '<div>About</div>',
+          },
+        },
       ]);
       app
         .use(
@@ -350,9 +369,9 @@ describe('Vue.use', () => {
             id: 'GTM-DEMO',
             vueRouter: router,
             vueRouterAdditionalEventData: () => ({
-              someProperty: 'some-value'
-            })
-          })
+              someProperty: 'some-value',
+            }),
+          }),
         )
         .mount('#app');
       await router.push('/about');
@@ -360,21 +379,21 @@ describe('Vue.use', () => {
         expect.arrayContaining([
           expect.objectContaining({
             event: 'gtm.js',
-            'gtm.start': expect.any(Number)
+            'gtm.start': expect.any(Number),
           }),
           expect.objectContaining({
             'content-name': '/',
             'content-view-name': 'Home',
             event: 'content-view',
-            someProperty: 'some-value'
+            someProperty: 'some-value',
           }),
           expect.objectContaining({
             'content-name': '/about',
             'content-view-name': 'About',
             event: 'content-view',
-            someProperty: 'some-value'
-          })
-        ])
+            someProperty: 'some-value',
+          }),
+        ]),
       );
     });
 
@@ -385,16 +404,16 @@ describe('Vue.use', () => {
           name: 'Home',
           path: '/',
           component: {
-            template: '<div>Home</div>'
-          }
+            template: '<div>Home</div>',
+          },
         },
         {
           name: 'About',
           path: '/about',
           component: {
-            template: '<div>About</div>'
-          }
-        }
+            template: '<div>About</div>',
+          },
+        },
       ]);
       app
         .use(
@@ -403,9 +422,9 @@ describe('Vue.use', () => {
             vueRouter: router,
             vueRouterAdditionalEventData: () =>
               Promise.resolve({
-                someProperty: 'some-async-value'
-              })
-          })
+                someProperty: 'some-async-value',
+              }),
+          }),
         )
         .mount('#app');
       await router.push('/about');
@@ -415,21 +434,21 @@ describe('Vue.use', () => {
         expect.arrayContaining([
           expect.objectContaining({
             event: 'gtm.js',
-            'gtm.start': expect.any(Number)
+            'gtm.start': expect.any(Number),
           }),
           expect.objectContaining({
             'content-name': '/',
             'content-view-name': 'Home',
             event: 'content-view',
-            someProperty: 'some-async-value'
+            someProperty: 'some-async-value',
           }),
           expect.objectContaining({
             'content-name': '/about',
             'content-view-name': 'About',
             event: 'content-view',
-            someProperty: 'some-async-value'
-          })
-        ])
+            someProperty: 'some-async-value',
+          }),
+        ]),
       );
     });
 
@@ -440,26 +459,26 @@ describe('Vue.use', () => {
           name: 'Home',
           path: '/',
           component: {
-            template: '<div>Home</div>'
+            template: '<div>Home</div>',
           },
           meta: {
             gtmAdditionalEventData: {
-              someProperty: 'home-value'
-            }
-          }
+              someProperty: 'home-value',
+            },
+          },
         },
         {
           name: 'About',
           path: '/about',
           component: {
-            template: '<div>About</div>'
+            template: '<div>About</div>',
           },
           meta: {
             gtmAdditionalEventData: {
-              someProperty: 'about-value'
-            }
-          }
-        }
+              someProperty: 'about-value',
+            },
+          },
+        },
       ]);
       app
         .use(
@@ -467,9 +486,9 @@ describe('Vue.use', () => {
             id: 'GTM-DEMO',
             vueRouter: router,
             vueRouterAdditionalEventData: () => ({
-              someProperty: 'some-value'
-            })
-          })
+              someProperty: 'some-value',
+            }),
+          }),
         )
         .mount('#app');
       await router.push('/about');
@@ -477,21 +496,21 @@ describe('Vue.use', () => {
         expect.arrayContaining([
           expect.objectContaining({
             event: 'gtm.js',
-            'gtm.start': expect.any(Number)
+            'gtm.start': expect.any(Number),
           }),
           expect.objectContaining({
             'content-name': '/',
             'content-view-name': 'Home',
             event: 'content-view',
-            someProperty: 'home-value'
+            someProperty: 'home-value',
           }),
           expect.objectContaining({
             'content-name': '/about',
             'content-view-name': 'About',
             event: 'content-view',
-            someProperty: 'about-value'
-          })
-        ])
+            someProperty: 'about-value',
+          }),
+        ]),
       );
     });
   });

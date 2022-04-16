@@ -21,7 +21,7 @@
     "build": "tsc",
     "format": "prettier --write .",
     "lint": "eslint .",
-    "test": "jest",
+    "test": "vitest",
     "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
   },
   "repository": {
@@ -56,26 +56,28 @@
     "tsconfig.json"
   ],
   "dependencies": {
-    "@gtm-support/core": "1.1.0"
+    "@gtm-support/core": "1.2.0"
   },
   "devDependencies": {
-    "@types/jest": "~27.0.3",
-    "@typescript-eslint/eslint-plugin": "~5.7.0",
-    "@typescript-eslint/parser": "~5.7.0",
-    "eslint": "~8.4.1",
-    "eslint-config-prettier": "~8.3.0",
-    "eslint-define-config": "~1.2.0",
-    "eslint-plugin-jsdoc": "~37.2.3",
+    "@types/jest": "~27.4.1",
+    "@typescript-eslint/eslint-plugin": "~5.19.0",
+    "@typescript-eslint/parser": "~5.19.0",
+    "eslint": "~8.13.0",
+    "eslint-config-prettier": "~8.5.0",
+    "eslint-define-config": "~1.3.0",
+    "eslint-gitignore": "~0.1.0",
+    "eslint-plugin-jsdoc": "~39.2.1",
     "eslint-plugin-prettier": "~4.0.0",
     "eslint-plugin-spellcheck": "~0.0.19",
-    "jest": "~27.4.5",
-    "jest-junit": "~13.0.0",
-    "prettier": "2.5.1",
+    "jest": "~27.5.1",
+    "jest-junit": "~13.1.0",
+    "prettier": "2.6.2",
     "prettier-plugin-organize-imports": "~2.3.4",
-    "ts-jest": "~27.1.2",
-    "typescript": "~4.5.4",
-    "vue": "^3.2.26",
-    "vue-router": "^4.0.12"
+    "ts-jest": "~27.1.4",
+    "typescript": "~4.6.3",
+    "vitest": "~0.9.3",
+    "vue": "^3.2.33",
+    "vue-router": "^4.0.14"
   },
   "peerDependencies": {
     "vue": "^3.0.0"
@@ -88,5 +90,5 @@
   "optionalDependencies": {
     "vue-router": "^4.0.0"
   },
-  "packageManager": "pnpm@6.24.1"
+  "packageManager": "pnpm@6.32.8"
 }

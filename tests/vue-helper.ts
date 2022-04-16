@@ -1,4 +1,5 @@
-import { App, createApp, defineComponent } from 'vue';
+import type { App } from 'vue';
+import { createApp, defineComponent } from 'vue';
 import type { Router, RouteRecordRaw } from 'vue-router';
 import { createMemoryHistory, createRouter } from 'vue-router';
 
@@ -15,7 +16,7 @@ export function createAppWithComponent() {
     name: 'App',
     render() {
       return null;
-    }
+    },
   });
   const app: App<Element> = createApp(appComponent);
   return { app, component: appComponent };
@@ -25,14 +26,14 @@ export function createAppWithComponent() {
 export function createAppWithRouter(routes: RouteRecordRaw[]) {
   const router: Router = createRouter({
     history: createMemoryHistory(),
-    routes
+    routes,
   });
   // eslint-disable-next-line @typescript-eslint/typedef
   const appComponent = defineComponent({
     name: 'App',
     render() {
       return null;
-    }
+    },
   });
   const app: App<Element> = createApp(appComponent);
   app.use(router);
@@ -40,7 +41,9 @@ export function createAppWithRouter(routes: RouteRecordRaw[]) {
 }
 
 export function resetHtml(): void {
-  const html: HTMLHtmlElement = document.getElementsByTagName('html')[0] as HTMLHtmlElement;
+  const html: HTMLHtmlElement = document.getElementsByTagName(
+    'html',
+  )[0] as HTMLHtmlElement;
   html.innerHTML = '';
 }
 

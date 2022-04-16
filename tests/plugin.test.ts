@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest';
 import { GtmPlugin as VueGtmPlugin } from '../src/index';
 
 describe('Plugin', () => {
@@ -8,7 +9,7 @@ describe('Plugin', () => {
       debug: false,
       defer: false,
       enabled: true,
-      loadScript: true
+      loadScript: true,
     });
   });
 
@@ -18,12 +19,16 @@ describe('Plugin', () => {
   });
 
   test('should apply id when passed as array', () => {
-    const instance: VueGtmPlugin = new VueGtmPlugin({ id: ['GTM-DEMO1', 'GTM-DEMO2'] });
+    const instance: VueGtmPlugin = new VueGtmPlugin({
+      id: ['GTM-DEMO1', 'GTM-DEMO2'],
+    });
     expect(instance.id).toEqual(['GTM-DEMO1', 'GTM-DEMO2']);
   });
 
   test('should apply id when passed as container array', () => {
-    const instance: VueGtmPlugin = new VueGtmPlugin({ id: [{ id: 'GTM-DEMO1' }, { id: 'GTM-DEMO2' }] });
+    const instance: VueGtmPlugin = new VueGtmPlugin({
+      id: [{ id: 'GTM-DEMO1' }, { id: 'GTM-DEMO2' }],
+    });
     expect(instance.id).toEqual([{ id: 'GTM-DEMO1' }, { id: 'GTM-DEMO2' }]);
   });
 

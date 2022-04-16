@@ -1,7 +1,8 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 
+import { describe, expect, test } from 'vitest';
 import { createGtm, useGtm } from '../src/index';
 import { createAppWithComponent } from './vue-helper';
 

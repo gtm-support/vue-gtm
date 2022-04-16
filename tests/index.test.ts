@@ -1,6 +1,12 @@
+import { afterEach, describe, expect, test } from 'vitest';
 import type { App } from 'vue';
 import VueGtm, { createGtm, useGtm } from '../src/index';
-import { appendAppDivToBody, createAppWithComponent, resetDataLayer, resetHtml } from './vue-helper';
+import {
+  appendAppDivToBody,
+  createAppWithComponent,
+  resetDataLayer,
+  resetHtml,
+} from './vue-helper';
 
 describe('Default', () => {
   afterEach(() => {
@@ -33,7 +39,9 @@ describe('Default', () => {
         VueGtm.install?.(fakeVueInstance, { id: [{ id: invalidGtmId }] });
       }).toThrowError(new Error(expectedErrorMessage));
       expect(() => {
-        VueGtm.install?.(fakeVueInstance, { id: [{ id: validGtmId }, { id: invalidGtmId }] });
+        VueGtm.install?.(fakeVueInstance, {
+          id: [{ id: validGtmId }, { id: invalidGtmId }],
+        });
       }).toThrowError(new Error(expectedErrorMessage));
     }
   });

@@ -1,6 +1,12 @@
-import type { GtmIdContainer, GtmQueryParams, GtmSupportOptions, LoadScriptOptions } from '@gtm-support/core';
+import type {
+  GtmIdContainer,
+  GtmQueryParams,
+  GtmSupportOptions,
+  LoadScriptOptions,
+} from '@gtm-support/core';
 import { GtmSupport as GtmPlugin, loadScript } from '@gtm-support/core';
-import { App, nextTick, Plugin } from 'vue';
+import type { App, Plugin } from 'vue';
+import { nextTick } from 'vue';
 import type { RouteLocationNormalized, Router } from 'vue-router';
 
 /**
@@ -16,12 +22,14 @@ export interface VueGtmUseOptions extends GtmSupportOptions {
    */
   vueRouterAdditionalEventData?: (
     to: RouteLocationNormalized,
-    from: RouteLocationNormalized
+    from: RouteLocationNormalized,
   ) => Record<string, any> | Promise<Record<string, any>>;
   /**
    * Don't trigger events for specified router names.
    */
-  ignoredViews?: string[] | ((to: RouteLocationNormalized, from: RouteLocationNormalized) => boolean);
+  ignoredViews?:
+    | string[]
+    | ((to: RouteLocationNormalized, from: RouteLocationNormalized) => boolean);
   /**
    * Whether or not call `trackView` in `Vue.nextTick`.
    */
@@ -53,7 +61,7 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
         options.vueRouter,
         options.ignoredViews,
         options.trackOnNextTick,
-        options.vueRouterAdditionalEventData
+        options.vueRouterAdditionalEventData,
       );
     }
 
@@ -65,13 +73,13 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
             loadScript(id, options as LoadScriptOptions);
           } else {
             const newConf: VueGtmUseOptions = {
-              ...options
+              ...options,
             };
 
             if (id.queryParams != null) {
               newConf.queryParams = {
                 ...newConf.queryParams,
-                ...id.queryParams
+                ...id.queryParams,
               } as GtmQueryParams;
             }
 
@@ -101,13 +109,15 @@ async function initVueRouterGuard(
   vueRouter: Exclude<VueGtmUseOptions['vueRouter'], undefined>,
   ignoredViews: VueGtmUseOptions['ignoredViews'] = [],
   trackOnNextTick: VueGtmUseOptions['trackOnNextTick'],
-  deriveAdditionalEventData: VueGtmUseOptions['vueRouterAdditionalEventData'] = () => ({})
+  deriveAdditionalEventData: VueGtmUseOptions['vueRouterAdditionalEventData'] = () => ({}),
 ): Promise<void> {
   let vueRouterModule: typeof import('vue-router');
   try {
     vueRouterModule = await import('vue-router');
   } catch {
-    console.warn("[VueGtm]: You tried to register 'vueRouter' for vue-gtm, but 'vue-router' was not found.");
+    console.warn(
+      "[VueGtm]: You tried to register 'vueRouter' for vue-gtm, but 'vue-router' was not found.",
+    );
     return;
   }
 
@@ -122,28 +132,47 @@ async function initVueRouterGuard(
     }
 
     // Dispatch vue event using meta gtm value if defined otherwise fallback to route name
-    const name: string = to.meta && typeof to.meta.gtm === 'string' && !!to.meta.gtm ? to.meta.gtm : to.name;
+    const name: string =
+      to.meta && typeof to.meta.gtm === 'string' && !!to.meta.gtm
+        ? to.meta.gtm
+        : to.name;
 
-    if (vueRouterModule.isNavigationFailure(failure, vueRouterModule.NavigationFailureType.aborted)) {
+    if (
+      vueRouterModule.isNavigationFailure(
+        failure,
+        vueRouterModule.NavigationFailureType.aborted,
+      )
+    ) {
       if (gtmPlugin?.debugEnabled()) {
-        console.log(`[VueGtm]: '${name}' not tracked due to navigation aborted`);
+        console.log(
+          `[VueGtm]: '${name}' not tracked due to navigation aborted`,
+        );
       }
-    } else if (vueRouterModule.isNavigationFailure(failure, vueRouterModule.NavigationFailureType.cancelled)) {
+    } else if (
+      vueRouterModule.isNavigationFailure(
+        failure,
+        vueRouterModule.NavigationFailureType.cancelled,
+      )
+    ) {
       if (gtmPlugin?.debugEnabled()) {
-        console.log(`[VueGtm]: '${name}' not tracked due to navigation cancelled`);
+        console.log(
+          `[VueGtm]: '${name}' not tracked due to navigation cancelled`,
+        );
       }
     }
 
     const additionalEventData: Record<string, any> = {
       ...(await deriveAdditionalEventData(to, from)),
-      ...(to.meta?.gtmAdditionalEventData as Record<string, any>)
+      ...(to.meta?.gtmAdditionalEventData as Record<string, any>),
     };
     const baseUrl: string = vueRouter.options?.history?.base ?? '';
     let fullUrl: string = baseUrl;
     if (!fullUrl.endsWith('/')) {
       fullUrl += '/';
     }
-    fullUrl += to.fullPath.startsWith('/') ? to.fullPath.substr(1) : to.fullPath;
+    fullUrl += to.fullPath.startsWith('/')
+      ? to.fullPath.substr(1)
+      : to.fullPath;
 
     if (trackOnNextTick) {
       void nextTick(() => {
@@ -193,7 +222,7 @@ export {
   hasScript,
   loadScript,
   LoadScriptOptions,
-  TrackEventOptions
+  TrackEventOptions,
 } from '@gtm-support/core';
 export { GtmPlugin };
 export default _default;
