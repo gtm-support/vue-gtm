@@ -1,6 +1,14 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.1-vue2...vue2-gtm)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.3.0-vue2...vue2-gtm)
+
+# 1.3.0
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.2.1-vue2...1.3.0-vue2)
+
+- Align with `@gtm-support/vue-gtm` `v1.5.0`
+  - Upgrade `core` to 1.3.0
+  - New option `vueRouterAdditionalEventData`
 
 # 1.2.1
 
