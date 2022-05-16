@@ -1,7 +1,14 @@
+import { afterEach, describe, expect, test } from 'vitest';
 import Vue from 'vue';
-import { CombinedVueInstance, ExtendedVue } from 'vue/types/vue';
-import VueGtm, { DataLayerObject, GtmPlugin as VueGtmPlugin } from '../src/index';
-import { appendAppDivToBody, createAppWithComponent, resetDataLayer, resetHtml } from './vue-helper';
+import type { CombinedVueInstance, ExtendedVue } from 'vue/types/vue';
+import type { DataLayerObject, GtmPlugin as VueGtmPlugin } from '../src/index';
+import VueGtm from '../src/index';
+import {
+  appendAppDivToBody,
+  createAppWithComponent,
+  resetDataLayer,
+  resetHtml,
+} from './vue-helper';
 
 // TODO: Find out why Vue in vue-2 is undefined
 
@@ -15,11 +22,17 @@ describe.skip('Vue.use', () => {
   test('should append google tag manager script to DOM', () => {
     appendAppDivToBody();
 
-    const app: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+    const app: ExtendedVue<
+      Vue,
+      unknown,
+      unknown,
+      unknown,
+      Record<never, any>
+    > = Vue.extend({
       name: 'App',
       render(createElement) {
         return createElement('div');
-      }
+      },
     });
 
     expect(window['dataLayer']).toBeUndefined();
@@ -28,22 +41,30 @@ describe.skip('Vue.use', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO' });
 
     new Vue({
-      render: (h) => h(app)
+      render: (h) => h(app),
     }).$mount('#app');
 
     expect(window['dataLayer']).toBeDefined();
     expect(document.scripts.length).toBe(1);
     expect(document.scripts.item(0)).toBeDefined();
-    expect(document.scripts.item(0)?.src).toBe('https://www.googletagmanager.com/gtm.js?id=GTM-DEMO');
+    expect(document.scripts.item(0)?.src).toBe(
+      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO',
+    );
   });
 
   test('should append multiple google tag manager scripts to DOM', () => {
     appendAppDivToBody();
-    const app: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+    const app: ExtendedVue<
+      Vue,
+      unknown,
+      unknown,
+      unknown,
+      Record<never, any>
+    > = Vue.extend({
       name: 'App',
       render(createElement) {
         return createElement('div');
-      }
+      },
     });
 
     expect(window['dataLayer']).toBeUndefined();
@@ -51,34 +72,54 @@ describe.skip('Vue.use', () => {
 
     Vue.use(VueGtm, {
       id: [
-        { id: 'GTM-DEMO', queryParams: { gtm_auth: 'abc123', gtm_preview: 'env-1', gtm_cookies_win: 'x' } },
-        { id: 'GTM-DEMO2', queryParams: { gtm_auth: 'abc234', gtm_preview: 'env-2', gtm_cookies_win: 'x' } }
-      ]
+        {
+          id: 'GTM-DEMO',
+          queryParams: {
+            gtm_auth: 'abc123',
+            gtm_preview: 'env-1',
+            gtm_cookies_win: 'x',
+          },
+        },
+        {
+          id: 'GTM-DEMO2',
+          queryParams: {
+            gtm_auth: 'abc234',
+            gtm_preview: 'env-2',
+            gtm_cookies_win: 'x',
+          },
+        },
+      ],
     });
 
     new Vue({
-      render: (h) => h(app)
+      render: (h) => h(app),
     }).$mount('#app');
 
     expect(window['dataLayer']).toBeDefined();
     expect(document.scripts.length).toBe(2);
     expect(document.scripts.item(0)).toBeDefined();
     expect(document.scripts.item(0)?.src).toBe(
-      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO&gtm_auth=abc123&gtm_preview=env-1&gtm_cookies_win=x'
+      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO&gtm_auth=abc123&gtm_preview=env-1&gtm_cookies_win=x',
     );
     expect(document.scripts.item(1)?.src).toBe(
-      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO2&gtm_auth=abc234&gtm_preview=env-2&gtm_cookies_win=x'
+      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO2&gtm_auth=abc234&gtm_preview=env-2&gtm_cookies_win=x',
     );
   });
 
   test('should not append google tag manager script to DOM if disabled', () => {
     appendAppDivToBody();
 
-    const app: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+    const app: ExtendedVue<
+      Vue,
+      unknown,
+      unknown,
+      unknown,
+      Record<never, any>
+    > = Vue.extend({
       name: 'App',
       render(createElement) {
         return createElement('div');
-      }
+      },
     });
 
     expect(window['dataLayer']).toBeUndefined();
@@ -87,7 +128,7 @@ describe.skip('Vue.use', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO', enabled: false });
 
     new Vue({
-      render: (h) => h(app)
+      render: (h) => h(app),
     }).$mount('#app');
 
     expect(window['dataLayer']).toBeUndefined();
@@ -97,11 +138,17 @@ describe.skip('Vue.use', () => {
   test('should append google tag manager script to DOM after lazy enable', () => {
     appendAppDivToBody();
 
-    const appComponent: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+    const appComponent: ExtendedVue<
+      Vue,
+      unknown,
+      unknown,
+      unknown,
+      Record<never, any>
+    > = Vue.extend({
       name: 'App',
       render(createElement) {
         return createElement('div');
-      }
+      },
     });
 
     expect(window['dataLayer']).toBeUndefined();
@@ -110,8 +157,14 @@ describe.skip('Vue.use', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO', enabled: false });
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
-      render: (h) => h(appComponent)
+    const vue: CombinedVueInstance<
+      Vue,
+      object,
+      object,
+      object,
+      Record<never, any>
+    > = new Vue({
+      render: (h) => h(appComponent),
     }).$mount('#app');
 
     const gtmPlugin: VueGtmPlugin = vue.$gtm;
@@ -122,7 +175,9 @@ describe.skip('Vue.use', () => {
     expect(window['dataLayer']).toBeDefined();
     expect(document.scripts.length).toBe(1);
     expect(document.scripts.item(0)).toBeDefined();
-    expect(document.scripts.item(0)?.src).toBe('https://www.googletagmanager.com/gtm.js?id=GTM-DEMO');
+    expect(document.scripts.item(0)?.src).toBe(
+      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO',
+    );
   });
 
   describe('Check src.nonce', () => {
@@ -132,17 +187,23 @@ describe.skip('Vue.use', () => {
 
     test('should not set src.nonce by default', () => {
       appendAppDivToBody();
-      const app: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+      const app: ExtendedVue<
+        Vue,
+        unknown,
+        unknown,
+        unknown,
+        Record<never, any>
+      > = Vue.extend({
         name: 'App',
         render(createElement) {
           return createElement('div');
-        }
+        },
       });
 
       Vue.use(VueGtm, { id: 'GTM-DEMO' });
 
       new Vue({
-        render: (h) => h(app)
+        render: (h) => h(app),
       }).$mount('#app');
 
       expect(document.scripts.length).toBe(1);
@@ -152,11 +213,17 @@ describe.skip('Vue.use', () => {
 
     test('should set src.nonce if configured', () => {
       appendAppDivToBody();
-      const app: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+      const app: ExtendedVue<
+        Vue,
+        unknown,
+        unknown,
+        unknown,
+        Record<never, any>
+      > = Vue.extend({
         name: 'App',
         render(createElement) {
           return createElement('div');
-        }
+        },
       });
 
       const nonce: string = '2726c7f26c';
@@ -164,7 +231,7 @@ describe.skip('Vue.use', () => {
       Vue.use(VueGtm, { id: 'GTM-DEMO', nonce });
 
       new Vue({
-        render: (h) => h(app)
+        render: (h) => h(app),
       }).$mount('#app');
 
       expect(document.scripts.length).toBe(1);
@@ -174,17 +241,23 @@ describe.skip('Vue.use', () => {
 
     test('should set src.nonce to empty', () => {
       appendAppDivToBody();
-      const app: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+      const app: ExtendedVue<
+        Vue,
+        unknown,
+        unknown,
+        unknown,
+        Record<never, any>
+      > = Vue.extend({
         name: 'App',
         render(createElement) {
           return createElement('div');
-        }
+        },
       });
 
       Vue.use(VueGtm, { id: 'GTM-DEMO', nonce: '' });
 
       new Vue({
-        render: (h) => h(app)
+        render: (h) => h(app),
       }).$mount('#app');
 
       expect(document.scripts.length).toBe(1);
@@ -200,8 +273,14 @@ describe.skip('Vue.use', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO', enabled: false });
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
-      render: (h) => h(app)
+    const vue: CombinedVueInstance<
+      Vue,
+      object,
+      object,
+      object,
+      Record<never, any>
+    > = new Vue({
+      render: (h) => h(app),
     }).$mount('#app');
 
     const gtmPlugin: VueGtmPlugin = vue.$gtm;
@@ -228,8 +307,14 @@ describe.skip('Vue.use', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO' });
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
-      render: (h) => h(app)
+    const vue: CombinedVueInstance<
+      Vue,
+      object,
+      object,
+      object,
+      Record<never, any>
+    > = new Vue({
+      render: (h) => h(app),
     }).$mount('#app');
 
     const gtmPlugin: VueGtmPlugin = vue.$gtm;
@@ -253,8 +338,14 @@ describe.skip('Vue.use', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO' });
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
-      render: (h) => h(app)
+    const vue: CombinedVueInstance<
+      Vue,
+      object,
+      object,
+      object,
+      Record<never, any>
+    > = new Vue({
+      render: (h) => h(app),
     }).$mount('#app');
 
     const gtmPlugin: VueGtmPlugin = vue.$gtm;
@@ -276,8 +367,14 @@ describe.skip('Vue.use', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO' });
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
-      render: (h) => h(app)
+    const vue: CombinedVueInstance<
+      Vue,
+      object,
+      object,
+      object,
+      Record<never, any>
+    > = new Vue({
+      render: (h) => h(app),
     }).$mount('#app');
 
     const gtmPlugin: VueGtmPlugin = vue.$gtm;
@@ -290,9 +387,9 @@ describe.skip('Vue.use', () => {
     expect(window['dataLayer']).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          'user-id': 'user-123'
-        })
-      ])
+          'user-id': 'user-123',
+        }),
+      ]),
     );
   });
 
@@ -303,8 +400,14 @@ describe.skip('Vue.use', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO' });
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
-      render: (h) => h(app)
+    const vue: CombinedVueInstance<
+      Vue,
+      object,
+      object,
+      object,
+      Record<never, any>
+    > = new Vue({
+      render: (h) => h(app),
     }).$mount('#app');
 
     const gtmPlugin: VueGtmPlugin = vue.$gtm;
@@ -317,14 +420,14 @@ describe.skip('Vue.use', () => {
       expect.arrayContaining([
         expect.objectContaining({
           event: 'gtm.js',
-          'gtm.start': expect.any(Number)
+          'gtm.start': expect.any(Number),
         }),
         expect.objectContaining({
           'content-name': 'Path',
           'content-view-name': 'ScreenName',
-          event: 'content-view'
-        })
-      ])
+          event: 'content-view',
+        }),
+      ]),
     );
   });
 
@@ -335,8 +438,14 @@ describe.skip('Vue.use', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO' });
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
-      render: (h) => h(app)
+    const vue: CombinedVueInstance<
+      Vue,
+      object,
+      object,
+      object,
+      Record<never, any>
+    > = new Vue({
+      render: (h) => h(app),
     }).$mount('#app');
 
     const gtmPlugin: VueGtmPlugin = vue.$gtm;
@@ -349,7 +458,7 @@ describe.skip('Vue.use', () => {
       expect.arrayContaining([
         expect.objectContaining({
           event: 'gtm.js',
-          'gtm.start': expect.any(Number)
+          'gtm.start': expect.any(Number),
         }),
         expect.objectContaining({
           action: null,
@@ -357,9 +466,9 @@ describe.skip('Vue.use', () => {
           'interaction-type': false,
           target: null,
           'target-properties': null,
-          value: null
-        })
-      ])
+          value: null,
+        }),
+      ]),
     );
   });
 });

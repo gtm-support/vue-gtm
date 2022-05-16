@@ -1,7 +1,13 @@
+import { afterEach, describe, expect, test } from 'vitest';
 import Vue from 'vue';
-import { CombinedVueInstance } from 'vue/types/vue';
+import type { CombinedVueInstance } from 'vue/types/vue';
 import VueGtm, { useGtm } from '../src/index';
-import { appendAppDivToBody, createAppWithComponent, resetDataLayer, resetHtml } from './vue-helper';
+import {
+  appendAppDivToBody,
+  createAppWithComponent,
+  resetDataLayer,
+  resetHtml,
+} from './vue-helper';
 
 describe('Default', () => {
   afterEach(() => {
@@ -34,7 +40,9 @@ describe('Default', () => {
         VueGtm.install?.(fakeVueInstance, { id: [{ id: invalidGtmId }] });
       }).toThrowError(new Error(expectedErrorMessage));
       expect(() => {
-        VueGtm.install?.(fakeVueInstance, { id: [{ id: validGtmId }, { id: invalidGtmId }] });
+        VueGtm.install?.(fakeVueInstance, {
+          id: [{ id: validGtmId }, { id: invalidGtmId }],
+        });
       }).toThrowError(new Error(expectedErrorMessage));
     }
   });
@@ -51,8 +59,14 @@ describe('Default', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO', enabled: false });
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
-      render: (h) => h(app)
+    const vue: CombinedVueInstance<
+      Vue,
+      object,
+      object,
+      object,
+      Record<never, any>
+    > = new Vue({
+      render: (h) => h(app),
     }).$mount('#app');
 
     expect(useGtm()).toBeDefined();

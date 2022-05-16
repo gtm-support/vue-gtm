@@ -12,6 +12,12 @@
     "parens",
     "readonly",
     "shinigami",
+    "vitest",
     "vuejs"
-  ]
+  ],
+  "eslint.validate": ["javascript", "typescript"],
+  "files.associations": {
+    "*.json5": "jsonc"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { ExtendedVue } from 'vue/types/vue';
+import type { ExtendedVue } from 'vue/types/vue';
 
 export function appendAppDivToBody(): void {
   const appDiv: HTMLDivElement = document.createElement('div');
@@ -9,23 +9,37 @@ export function appendAppDivToBody(): void {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/explicit-module-boundary-types
 export function createAppWithComponent() {
-  const appComponent: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+  const appComponent: ExtendedVue<
+    Vue,
+    unknown,
+    unknown,
+    unknown,
+    Record<never, any>
+  > = Vue.extend({
     name: 'App',
     render(createElement) {
       return createElement('div');
-    }
+    },
   });
-  const app: ExtendedVue<Vue, unknown, unknown, unknown, Record<never, any>> = Vue.extend({
+  const app: ExtendedVue<
+    Vue,
+    unknown,
+    unknown,
+    unknown,
+    Record<never, any>
+  > = Vue.extend({
     name: 'App',
     render(createElement) {
       return createElement(appComponent);
-    }
+    },
   });
   return { app, component: appComponent };
 }
 
 export function resetHtml(): void {
-  const html: HTMLHtmlElement = document.getElementsByTagName('html')[0] as HTMLHtmlElement;
+  const html: HTMLHtmlElement = document.getElementsByTagName(
+    'html',
+  )[0] as HTMLHtmlElement;
   html.innerHTML = '';
 }
 

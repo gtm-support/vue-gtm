@@ -1,9 +1,10 @@
 /**
- * @jest-environment node
+ * @vitest-environment node
  */
 
+import { describe, expect, test } from 'vitest';
 import Vue from 'vue';
-import { CombinedVueInstance } from 'vue/types/vue';
+import type { CombinedVueInstance } from 'vue/types/vue';
 import VueGtm, { useGtm } from '../src/index';
 import { createAppWithComponent } from './vue-helper';
 
@@ -14,8 +15,14 @@ describe.skip('SSG Mode', () => {
     Vue.use(VueGtm, { id: 'GTM-DEMO' });
 
     // eslint-disable-next-line @typescript-eslint/ban-types
-    const vue: CombinedVueInstance<Vue, object, object, object, Record<never, any>> = new Vue({
-      render: (h) => h(app)
+    const vue: CombinedVueInstance<
+      Vue,
+      object,
+      object,
+      object,
+      Record<never, any>
+    > = new Vue({
+      render: (h) => h(app),
     });
 
     expect(useGtm()).toBeDefined();

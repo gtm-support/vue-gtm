@@ -1,28 +1,28 @@
 // @ts-check
 const { defineConfig } = require('eslint-define-config');
+const { readGitignoreFiles } = require('eslint-gitignore');
 
 module.exports = defineConfig({
-  ignorePatterns: ['.eslintrc.js', 'dist/'],
+  ignorePatterns: [
+    ...readGitignoreFiles(),
+    '.eslintrc.js', // Skip self linting
+  ],
+  root: true,
   env: {
     es6: true,
-    jest: true,
-    node: true
+    node: true,
   },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:jsdoc/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
-  },
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: ['./tsconfig.lint.json'],
-    warnOnUnsupportedTypeScriptVersion: false
+    warnOnUnsupportedTypeScriptVersion: false,
   },
   plugins: ['@typescript-eslint', 'prettier', 'jsdoc', 'spellcheck'],
   rules: {
@@ -33,10 +33,16 @@ module.exports = defineConfig({
     semi: ['error', 'always'],
 
     '@typescript-eslint/ban-ts-comment': 'off',
-    '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
-    '@typescript-eslint/indent': ['error', 2, { SwitchCase: 1, ignoredNodes: ['MemberExpression'] }],
+    '@typescript-eslint/explicit-function-return-type': [
+      'error',
+      { allowExpressions: true },
+    ],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/member-ordering': 'warn',
+    '@typescript-eslint/consistent-type-imports': [
+      'error',
+      { prefer: 'type-imports', disallowTypeAnnotations: false },
+    ],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-parameter-properties': 'off',
@@ -47,19 +53,23 @@ module.exports = defineConfig({
     '@typescript-eslint/prefer-optional-chain': 'warn',
     '@typescript-eslint/prefer-readonly': ['warn'],
     '@typescript-eslint/restrict-template-expressions': 'off',
-    '@typescript-eslint/typedef': ['warn', { memberVariableDeclaration: true, variableDeclaration: true }],
+    '@typescript-eslint/typedef': [
+      'warn',
+      { memberVariableDeclaration: true, variableDeclaration: true },
+    ],
 
     'jsdoc/match-description': [
       'warn',
       {
-        mainDescription: '/^[A-Z`].+?(\\.|:)(\\n\\n.*((\\n{1,2}- .+)|(_.+_)|`.+`|\\n\\n---))?$/us',
+        mainDescription:
+          '/^[A-Z`].+?(\\.|:)(\\n\\n.*((\\n{1,2}- .+)|(_.+_)|`.+`|\\n\\n---))?\\s?$/us',
         matchDescription: '^[A-Z`].+(\\.|`.+`)$',
         contexts: ['any'],
         tags: {
           param: true,
-          returns: true
-        }
-      }
+          returns: true,
+        },
+      },
     ],
     'jsdoc/no-types': 'error',
     'jsdoc/require-jsdoc': [
@@ -75,9 +85,9 @@ module.exports = defineConfig({
           'TSInterfaceDeclaration',
           'TSMethodSignature',
           // 'TSPropertySignature',
-          'TSTypeAliasDeclaration'
-        ]
-      }
+          'TSTypeAliasDeclaration',
+        ],
+      },
     ],
     'jsdoc/require-param-type': 'off',
     'jsdoc/require-returns-type': 'off',
@@ -97,15 +107,16 @@ module.exports = defineConfig({
           'nullish',
           'overridable',
           'readonly',
-          'vue'
-        ]
-      }
-    ]
+          'vitest',
+          'vue',
+        ],
+      },
+    ],
   },
   settings: {
     jsdoc: {
-      mode: 'typescript'
-    }
+      mode: 'typescript',
+    },
   },
   overrides: [
     {
@@ -113,8 +124,8 @@ module.exports = defineConfig({
       rules: {
         '@typescript-eslint/unbound-method': 'off',
         'jsdoc/check-tag-names': 'off',
-        'jsdoc/require-jsdoc': 'off'
-      }
-    }
-  ]
+        'jsdoc/require-jsdoc': 'off',
+      },
+    },
+  ],
 });

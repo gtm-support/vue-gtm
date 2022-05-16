@@ -65,7 +65,7 @@ Vue.use(VueGtm, {
     // Add URL query string when loading gtm.js with GTM ID (required when using custom environments)
     gtm_auth: 'AB7cDEf3GHIjkl-MnOP8qr',
     gtm_preview: 'env-4',
-    gtm_cookies_win: 'x'
+    gtm_cookies_win: 'x',
   },
   defer: false, // Script can be set to `defer` to speed up page load at the cost of less accurate results (in case visitor leaves before script is loaded, which is unlikely but possible). Defaults to false, so the script is loaded `async` by default
   compatibility: false, // Will add `async` and `defer` to the script tag to not block requests for old browsers that do not support `async`
@@ -75,7 +75,7 @@ Vue.use(VueGtm, {
   loadScript: true, // Whether or not to load the GTM Script (Helpful if you are including GTM manually, but need the dataLayer functionality in your components) (optional)
   vueRouter: router, // Pass the router instance to automatically sync with router (optional)
   ignoredViews: ['homepage'], // Don't trigger events for specified router names (optional)
-  trackOnNextTick: false // Whether or not call trackView in Vue.nextTick
+  trackOnNextTick: false, // Whether or not call trackView in Vue.nextTick
 });
 ```
 
@@ -93,7 +93,7 @@ export default {
   name: 'MyComponent',
   data() {
     return {
-      someData: false
+      someData: false,
     };
   },
   methods: {
@@ -104,13 +104,13 @@ export default {
         action: 'click',
         label: 'Home page SIP calculator',
         value: 5000,
-        noninteraction: false // Optional
+        noninteraction: false, // Optional
       });
-    }
+    },
   },
   mounted() {
     this.$gtm.trackView('MyScreenName', 'currentPath');
-  }
+  },
 };
 ```
 
@@ -124,7 +124,7 @@ dataLayer.push({
   'target-properties': label,
   value: value,
   'interaction-type': noninteraction,
-  ...rest
+  ...rest,
 });
 ```
 
@@ -135,7 +135,7 @@ It's also possible to send completely custom data to GTM with just pushing somet
 ```js
 if (this.$gtm.enabled()) {
   window.dataLayer?.push({
-    event: 'myEvent'
+    event: 'myEvent',
     // further parameters
   });
 }
@@ -160,7 +160,7 @@ const myRoute = {
   path: 'myRoute',
   name: 'MyRouteName',
   component: SomeComponent,
-  meta: { gtm: 'MyCustomValue' }
+  meta: { gtm: 'MyCustomValue' },
 };
 ```
 
@@ -177,13 +177,33 @@ const myRoute = {
   path: 'myRoute',
   name: 'myRouteName',
   component: SomeComponent,
-  meta: { gtmAdditionalEventData: { routeCategory: 'INFO' } }
+  meta: { gtmAdditionalEventData: { routeCategory: 'INFO' } },
 };
 ```
 
 > This sends the property `routeCategory` with the value 'INFO' as part of your page view event for that route.
 
 Note that the properties `event`, `content-name` and `content-view-name` are always overridden.
+
+### Passing dynamic properties with page view events
+
+If you need to pass dynamic properties as part of your page views, you can set a callback that derives the custom data after navigation.
+
+Example:
+
+```js
+createGtm({
+  // ...other options
+  vueRouter: router,
+  vueRouterAdditionalEventData: () => ({
+    someComputedProperty: computeProperty(),
+  }),
+});
+```
+
+> This computes and sends the property `someComputedProperty` as part of your page view event after every navigation.
+
+Note that a property with the same name on route level will override this.
 
 ## Using with composition API
 
@@ -212,14 +232,14 @@ export default {
         action: 'click',
         label: 'My custom component trigger',
         value: 5000,
-        noninteraction: false
+        noninteraction: false,
       });
     }
 
     return {
-      triggerEvent
+      triggerEvent,
     };
-  }
+  },
 };
 </script>
 ```
