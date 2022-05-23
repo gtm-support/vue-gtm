@@ -1,6 +1,13 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.5.0...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.6.0...main)
+
+# 1.6.0
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.5.0...1.6.0)
+
+- Upgrade `core` to [1.4.0](https://github.com/gtm-support/core/releases/tag/1.4.0)
+- Use `^`-semver modifier for `@gtm-support/core`
 
 # 1.5.0
 
