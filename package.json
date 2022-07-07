@@ -1,6 +1,6 @@
 {
   "name": "@gtm-support/vue-gtm",
-  "version": "1.6.0",
+  "version": "2.0.0-beta.1",
   "description": "Simple implementation of Google Tag Manager for Vue",
   "main": "dist/index.js",
   "author": {
@@ -59,9 +59,9 @@
     "@gtm-support/core": "^1.4.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "~5.30.3",
-    "@typescript-eslint/parser": "~5.30.3",
-    "eslint": "~8.18.0",
+    "@typescript-eslint/eslint-plugin": "~5.30.5",
+    "@typescript-eslint/parser": "~5.30.5",
+    "eslint": "~8.19.0",
     "eslint-config-prettier": "~8.5.0",
     "eslint-define-config": "~1.5.1",
     "eslint-gitignore": "~0.1.0",
@@ -72,12 +72,12 @@
     "prettier": "2.7.1",
     "prettier-plugin-organize-imports": "~3.0.0",
     "typescript": "~4.7.4",
-    "vitest": "~0.16.0",
+    "vitest": "~0.17.1",
     "vue": "^3.2.37",
-    "vue-router": "^4.0.16"
+    "vue-router": "^4.1.1"
   },
   "peerDependencies": {
-    "vue": "^3.0.0"
+    "vue": "^3.2.0"
   },
   "peerDependenciesMeta": {
     "vue-router": {
@@ -85,7 +85,7 @@
     }
   },
   "optionalDependencies": {
-    "vue-router": "^4.0.0"
+    "vue-router": "^4.1.0"
   },
-  "packageManager": "pnpm@7.4.1"
+  "packageManager": "pnpm@7.5.0"
 }
