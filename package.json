@@ -1,6 +1,6 @@
 {
   "name": "@gtm-support/vue-gtm",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.2",
   "description": "Simple implementation of Google Tag Manager for Vue",
   "main": "dist/index.js",
   "author": {

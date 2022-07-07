@@ -1,15 +1,16 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/2.0.0-beta.1...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/2.0.0-beta.2...main)
 
-# 2.0.0-beta.1
+# 2.0.0-beta.2
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.6.0...2.0.0-beta.1)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.6.0...2.0.0-beta.2)
 
 ## BREAKING CHANGE
 
 - Minimum required Vue version is now `^3.2.0`
 - Minimum required Vue Router version is now `^4.1.0`
+- Minimum required EcmaScript is now `ES2018`
 
 # 1.6.0
 
