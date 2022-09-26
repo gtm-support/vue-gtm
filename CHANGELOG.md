@@ -1,6 +1,15 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/2.0.0-beta.2...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/2.0.0-beta.3...main)
+
+# 2.0.0-beta.3
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.6.0...2.0.0-beta.3)
+
+- Handle `vue-router` failure checks manually ([#273])
+- Set `lib` from `ES2020` to `ES2018`
+
+[#273]: https://github.com/gtm-support/vue-gtm/pull/273
 
 # 2.0.0-beta.2
 
