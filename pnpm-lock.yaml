@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@gtm-support/core': ^1.4.0
+  '@gtm-support/core': ^1.4.1
   '@typescript-eslint/eslint-plugin': ~5.38.0
   '@typescript-eslint/parser': ~5.38.0
   eslint: ~8.24.0
@@ -20,7 +20,7 @@ specifiers:
   vue-router: ^4.1.0
 
 dependencies:
-  '@gtm-support/core': 1.4.0
+  '@gtm-support/core': 1.4.1
 
 optionalDependencies:
   vue-router: 4.1.5_vue@3.2.39
@@ -111,8 +111,8 @@ packages:
       - supports-color
     dev: true
 
-  /@gtm-support/core/1.4.0:
-    resolution: {integrity: sha512-eiAiEdW7DdzDs45pdi+MF/6+OThMZAwwQeMQNcbE0wEGHvbIB/mZ1PiBq4qK7IYDscBKDT/PdnAacY7P/zHIjw==}
+  /@gtm-support/core/1.4.1:
+    resolution: {integrity: sha512-yplxiR0LvOAVvn1eEXc69sWkHC44Hg7Z8Lh7Q9wJYrC6QQkaSZm1TdPHKyRJlXaIh3bZlyd3VoQR5Fj0oKpj7A==}
     dev: false
 
   /@humanwhocodes/config-array/0.10.5:
