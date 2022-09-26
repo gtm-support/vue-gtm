@@ -3,7 +3,7 @@
     "target": "ES2018",
     "module": "CommonJS",
     "inlineSourceMap": false,
-    "lib": ["ES2020", "DOM"],
+    "lib": ["ES2018", "DOM"],
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,
