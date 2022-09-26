@@ -7,7 +7,12 @@ import type {
 import { GtmSupport as GtmPlugin, loadScript } from '@gtm-support/core';
 import type { App, Plugin } from 'vue';
 import { nextTick } from 'vue';
-import type { RouteLocationNormalized, Router } from 'vue-router';
+import type {
+  ErrorTypes,
+  NavigationFailure,
+  RouteLocationNormalized,
+  Router,
+} from 'vue-router';
 
 /**
  * Options passed to the plugin.
@@ -56,7 +61,7 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
   if (gtmPlugin.isInBrowserContext()) {
     // Handle vue-router if defined
     if (options.vueRouter) {
-      void initVueRouterGuard(
+      initVueRouterGuard(
         app,
         options.vueRouter,
         options.ignoredViews,
@@ -104,21 +109,25 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
  * @param trackOnNextTick Whether or not to call `trackView` in `Vue.nextTick`.
  * @param deriveAdditionalEventData Callback to derive additional event data.
  */
-async function initVueRouterGuard(
+function initVueRouterGuard(
   app: App,
   vueRouter: Exclude<VueGtmUseOptions['vueRouter'], undefined>,
   ignoredViews: VueGtmUseOptions['ignoredViews'] = [],
   trackOnNextTick: VueGtmUseOptions['trackOnNextTick'],
   deriveAdditionalEventData: VueGtmUseOptions['vueRouterAdditionalEventData'] = () => ({}),
-): Promise<void> {
-  let vueRouterModule: typeof import('vue-router');
-  try {
-    vueRouterModule = await import('vue-router');
-  } catch {
-    console.warn(
-      "[VueGtm]: You tried to register 'vueRouter' for vue-gtm, but 'vue-router' was not found.",
-    );
-    return;
+): void {
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  function isNavigationFailure(
+    failure: void | NavigationFailure | undefined,
+    navigationFailureType:
+      | ErrorTypes.NAVIGATION_ABORTED
+      | ErrorTypes.NAVIGATION_CANCELLED
+      | ErrorTypes.NAVIGATION_DUPLICATED,
+  ): boolean {
+    if (!(failure instanceof Error)) {
+      return false;
+    }
+    return !!(failure.type & navigationFailureType);
   }
 
   vueRouter.afterEach(async (to, from, failure) => {
@@ -137,23 +146,13 @@ async function initVueRouterGuard(
         ? to.meta.gtm
         : to.name;
 
-    if (
-      vueRouterModule.isNavigationFailure(
-        failure,
-        vueRouterModule.NavigationFailureType.aborted,
-      )
-    ) {
+    if (isNavigationFailure(failure, 4 /* NAVIGATION_ABORTED */)) {
       if (gtmPlugin?.debugEnabled()) {
         console.log(
           `[VueGtm]: '${name}' not tracked due to navigation aborted`,
         );
       }
-    } else if (
-      vueRouterModule.isNavigationFailure(
-        failure,
-        vueRouterModule.NavigationFailureType.cancelled,
-      )
-    ) {
+    } else if (isNavigationFailure(failure, 8 /* NAVIGATION_CANCELLED */)) {
       if (gtmPlugin?.debugEnabled()) {
         console.log(
           `[VueGtm]: '${name}' not tracked due to navigation cancelled`,
@@ -171,7 +170,7 @@ async function initVueRouterGuard(
       fullUrl += '/';
     }
     fullUrl += to.fullPath.startsWith('/')
-      ? to.fullPath.substr(1)
+      ? to.fullPath.substring(1)
       : to.fullPath;
 
     if (trackOnNextTick) {
