@@ -59,22 +59,22 @@
     "@gtm-support/core": "^1.4.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "~5.30.5",
-    "@typescript-eslint/parser": "~5.30.5",
-    "eslint": "~8.19.0",
+    "@typescript-eslint/eslint-plugin": "~5.38.0",
+    "@typescript-eslint/parser": "~5.38.0",
+    "eslint": "~8.24.0",
     "eslint-config-prettier": "~8.5.0",
-    "eslint-define-config": "~1.5.1",
+    "eslint-define-config": "~1.7.0",
     "eslint-gitignore": "~0.1.0",
-    "eslint-plugin-jsdoc": "~39.3.3",
+    "eslint-plugin-jsdoc": "~39.3.6",
     "eslint-plugin-prettier": "~4.2.1",
     "eslint-plugin-spellcheck": "~0.0.19",
     "jsdom": "~20.0.0",
     "prettier": "2.7.1",
-    "prettier-plugin-organize-imports": "~3.0.0",
-    "typescript": "~4.7.4",
-    "vitest": "~0.17.1",
-    "vue": "^3.2.37",
-    "vue-router": "^4.1.1"
+    "prettier-plugin-organize-imports": "~3.1.1",
+    "typescript": "~4.8.3",
+    "vitest": "~0.23.4",
+    "vue": "^3.2.39",
+    "vue-router": "^4.1.5"
   },
   "peerDependencies": {
     "vue": "^3.2.0"
@@ -87,5 +87,5 @@
   "optionalDependencies": {
     "vue-router": "^4.1.0"
   },
-  "packageManager": "pnpm@7.5.0"
+  "packageManager": "pnpm@7.12.2"
 }
