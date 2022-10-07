@@ -1,25 +1,24 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/2.0.0-beta.3...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/2.0.0...main)
 
-# 2.0.0-beta.3
+# 2.0.0
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.6.0...2.0.0-beta.3)
-
-- Handle `vue-router` failure checks manually ([#273])
-- Set `lib` from `ES2020` to `ES2018`
-
-[#273]: https://github.com/gtm-support/vue-gtm/pull/273
-
-# 2.0.0-beta.2
-
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.6.0...2.0.0-beta.2)
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.6.0...2.0.0)
 
 ## BREAKING CHANGE
 
 - Minimum required Vue version is now `^3.2.0`
 - Minimum required Vue Router version is now `^4.1.0`
 - Minimum required EcmaScript is now `ES2018`
+
+## Features
+
+- Now serving ESM and CJS
+- Handle `vue-router` failure checks manually ([#273])
+- Set `lib` from `ES2020` to `ES2018`
+
+[#273]: https://github.com/gtm-support/vue-gtm/pull/273
 
 # 1.6.0
 

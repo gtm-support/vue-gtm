@@ -63,7 +63,7 @@
     "google"
   ],
   "dependencies": {
-    "@gtm-support/core": "^2.0.0-beta.1"
+    "@gtm-support/core": "^2.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "~5.39.0",
