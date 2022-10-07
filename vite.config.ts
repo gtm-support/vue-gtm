@@ -17,6 +17,9 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ['@gtm-support/core', 'vue', 'vue-router'],
+      output: {
+        exports: 'named',
+      },
     },
     minify: false,
     target: 'node14.6',
