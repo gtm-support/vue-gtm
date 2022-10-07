@@ -11,9 +11,12 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'vite-plugin-time-reporter',
+      name: '@gtm-support/vue-gtm',
       fileName: 'index',
       formats: ['es', 'cjs'],
+    },
+    rollupOptions: {
+      external: ['@gtm-support/core', 'vue', 'vue-router'],
     },
     minify: false,
     target: 'node14.6',

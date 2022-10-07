@@ -107,6 +107,7 @@ module.exports = defineConfig({
           'nullish',
           'overridable',
           'readonly',
+          'rollup',
           'vite',
           'vitest',
           'vue',
