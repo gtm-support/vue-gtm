@@ -1,6 +1,21 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/1.3.0-vue2...vue2-gtm)
+[diff](https://github.com/gtm-support/vue-gtm/compare/2.0.0-vue2...vue2-gtm)
+
+# 2.0.0
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/1.3.0-vue2...2.0.0-vue2)
+
+## BREAKING CHANGE
+
+- Minimum required Vue version is now `^2.7.0`
+- Minimum required Vue Router version is now `^3.6.0`
+- Minimum required EcmaScript is now `ES2018`
+
+## Features
+
+- Now serving ESM and CJS
+- Set `lib` from `ES2020` to `ES2018`
 
 # 1.3.0
 

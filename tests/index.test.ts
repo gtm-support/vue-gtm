@@ -26,7 +26,12 @@ describe('Default', () => {
     const invalidGtmIds: string[] = ['GTM-x', 'a', 'gtm-a', 'Error: ', 'Error'];
     const fakeVueInstance: typeof Vue = null as unknown as typeof Vue;
     for (const invalidGtmId of invalidGtmIds) {
-      const expectedErrorMessage: string = `GTM-ID '${invalidGtmId}' is not valid`;
+      const suggestion: string = String(invalidGtmId)
+        .toUpperCase()
+        .replace(/.*-|[^0-9A-Z]/g, '');
+
+      const expectedErrorMessage: string = `'${invalidGtmId}' is not a valid GTM-ID (/^GTM-[0-9A-Z]+$/). Did you mean 'GTM-${suggestion}'?`;
+
       expect(() => {
         VueGtm.install?.(fakeVueInstance, { id: invalidGtmId });
       }).toThrowError(new Error(expectedErrorMessage));
