@@ -2,7 +2,27 @@
   "name": "@gtm-support/vue-gtm",
   "version": "2.0.0-beta.3",
   "description": "Simple implementation of Google Tag Manager for Vue",
-  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf coverage dist pnpm-lock.yaml node_modules",
+    "build": "tsc --noEmit && vite build",
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "test": "vitest",
+    "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "author": {
     "name": "Christopher Quadflieg",
     "email": "chrissi92@hotmail.de",
@@ -16,14 +36,6 @@
   ],
   "license": "MIT",
   "homepage": "https://github.com/gtm-support/vue-gtm",
-  "scripts": {
-    "clean": "rm -Rf dist pnpm-lock.yaml node_modules",
-    "build": "tsc",
-    "format": "prettier --write .",
-    "lint": "eslint .",
-    "test": "vitest",
-    "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gtm-support/vue-gtm.git"
@@ -50,13 +62,8 @@
     "vue",
     "google"
   ],
-  "files": [
-    "dist",
-    "src",
-    "tsconfig.json"
-  ],
   "dependencies": {
-    "@gtm-support/core": "^1.4.2"
+    "@gtm-support/core": "^2.0.0-beta.1"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "~5.39.0",
@@ -71,7 +78,10 @@
     "jsdom": "~20.0.1",
     "prettier": "2.7.1",
     "prettier-plugin-organize-imports": "~3.1.1",
+    "rimraf": "~3.0.2",
     "typescript": "~4.8.4",
+    "vite": "~3.1.6",
+    "vite-plugin-dts": "~1.6.5",
     "vitest": "~0.23.4",
     "vue": "^3.2.40",
     "vue-router": "^4.1.5"

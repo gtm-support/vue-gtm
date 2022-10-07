@@ -213,13 +213,15 @@ const _default: VueGtmPlugin = { install };
 
 export {
   assertIsGtmId,
+  GtmSupport,
+  hasScript,
+  loadScript,
+} from '@gtm-support/core';
+export type {
   DataLayerObject,
   GtmIdContainer,
   GtmQueryParams,
-  GtmSupport,
   GtmSupportOptions,
-  hasScript,
-  loadScript,
   LoadScriptOptions,
   TrackEventOptions,
 } from '@gtm-support/core';

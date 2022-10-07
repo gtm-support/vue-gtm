@@ -4,7 +4,6 @@
     "module": "CommonJS",
     "inlineSourceMap": false,
     "lib": ["ES2018", "DOM"],
-    "outDir": "dist",
     "rootDir": "src",
     "strict": true,
     "downlevelIteration": true,
