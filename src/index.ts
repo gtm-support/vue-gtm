@@ -14,6 +14,11 @@ import type {
   Router,
 } from 'vue-router';
 
+// eslint-disable-next-line jsdoc/require-jsdoc
+type IgnoredViews =
+  | string[]
+  | ((to: RouteLocationNormalized, from: RouteLocationNormalized) => boolean);
+
 /**
  * Options passed to the plugin.
  */
@@ -32,9 +37,7 @@ export interface VueGtmUseOptions extends GtmSupportOptions {
   /**
    * Don't trigger events for specified router names.
    */
-  ignoredViews?:
-    | string[]
-    | ((to: RouteLocationNormalized, from: RouteLocationNormalized) => boolean);
+  ignoredViews?: IgnoredViews;
   /**
    * Whether or not call `trackView` in `Vue.nextTick`.
    */
@@ -100,6 +103,12 @@ function install(app: App, options: VueGtmUseOptions = { id: '' }): void {
   app.provide('gtm', options);
 }
 
+// eslint-disable-next-line jsdoc/require-jsdoc
+type NavigationFailureType =
+  | ErrorTypes.NAVIGATION_ABORTED
+  | ErrorTypes.NAVIGATION_CANCELLED
+  | ErrorTypes.NAVIGATION_DUPLICATED;
+
 /**
  * Initialize the router guard.
  *
@@ -119,10 +128,7 @@ function initVueRouterGuard(
   // eslint-disable-next-line jsdoc/require-jsdoc
   function isNavigationFailure(
     failure: void | NavigationFailure | undefined,
-    navigationFailureType:
-      | ErrorTypes.NAVIGATION_ABORTED
-      | ErrorTypes.NAVIGATION_CANCELLED
-      | ErrorTypes.NAVIGATION_DUPLICATED,
+    navigationFailureType: NavigationFailureType,
   ): boolean {
     if (!(failure instanceof Error)) {
       return false;
@@ -212,8 +218,8 @@ export type VueGtmPlugin = Plugin;
 const _default: VueGtmPlugin = { install };
 
 export {
-  assertIsGtmId,
   GtmSupport,
+  assertIsGtmId,
   hasScript,
   loadScript,
 } from '@gtm-support/core';

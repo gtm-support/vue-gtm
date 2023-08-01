@@ -12,12 +12,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node_version: [14, 16, 18]
+        node_version: [16, 18, 20]
         include:
           - os: macos-latest
-            node_version: 18
+            node_version: 20
           - os: windows-latest
-            node_version: 18
+            node_version: 20
       fail-fast: false
 
     name: 'Build&Test: node-${{ matrix.node_version }}, ${{ matrix.os }}'
@@ -27,8 +27,6 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
-        with:
-          version: 7
 
       - name: Set node version to ${{ matrix.node_version }}
         uses: actions/setup-node@v3
@@ -55,7 +53,7 @@ jobs:
 
   lint:
     runs-on: ubuntu-latest
-    name: 'Lint: node-18, ubuntu-latest'
+    name: 'Lint: node-20, ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -63,13 +61,11 @@ jobs:
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
-        with:
-          version: 7
 
-      - name: Set node version to 18
+      - name: Set node version to 20
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
 
       - name: Prepare

@@ -1,14 +1,18 @@
 {
   "name": "@gtm-support/vue-gtm",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Simple implementation of Google Tag Manager for Vue",
   "scripts": {
-    "clean": "rimraf coverage dist pnpm-lock.yaml node_modules",
-    "build": "tsc --noEmit && vite build",
-    "format": "prettier --write .",
-    "lint": "eslint .",
+    "clean": "rimraf coverage .eslintcache dist pnpm-lock.yaml node_modules",
+    "build:clean": "rimraf dist",
+    "build:code": "tsup-node",
+    "build": "run-s build:clean build:code",
+    "format": "prettier --cache --write .",
+    "lint": "eslint --cache --cache-strategy content --report-unused-disable-directives .",
+    "ts-check": "tsc",
     "test": "vitest",
-    "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build"
+    "prepublishOnly": "pnpm run clean && pnpm install && pnpm run build",
+    "preflight": "pnpm install && run-s format lint build test ts-check"
   },
   "type": "module",
   "files": [
@@ -16,12 +20,12 @@
   ],
   "main": "dist/index.cjs",
   "module": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "author": {
     "name": "Christopher Quadflieg",
@@ -66,28 +70,28 @@
     "@gtm-support/core": "^2.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "~5.39.0",
-    "@typescript-eslint/parser": "~5.39.0",
-    "eslint": "~8.24.0",
-    "eslint-config-prettier": "~8.5.0",
-    "eslint-define-config": "~1.7.0",
+    "@typescript-eslint/eslint-plugin": "~6.2.1",
+    "@typescript-eslint/parser": "~6.2.1",
+    "eslint": "~8.46.0",
+    "eslint-config-prettier": "~8.9.0",
+    "eslint-define-config": "~1.22.0",
     "eslint-gitignore": "~0.1.0",
-    "eslint-plugin-jsdoc": "~39.3.6",
-    "eslint-plugin-prettier": "~4.2.1",
-    "eslint-plugin-spellcheck": "~0.0.19",
-    "jsdom": "~20.0.1",
-    "prettier": "2.7.1",
-    "prettier-plugin-organize-imports": "~3.1.1",
-    "rimraf": "~3.0.2",
-    "typescript": "~4.8.4",
-    "vite": "~3.1.6",
-    "vite-plugin-dts": "~1.6.5",
-    "vitest": "~0.23.4",
-    "vue": "^3.2.40",
-    "vue-router": "^4.1.5"
+    "eslint-plugin-jsdoc": "~46.4.5",
+    "eslint-plugin-prettier": "~5.0.0",
+    "eslint-plugin-spellcheck": "~0.0.20",
+    "jsdom": "~22.1.0",
+    "npm-run-all": "~4.1.5",
+    "prettier": "3.0.0",
+    "prettier-plugin-organize-imports": "~3.2.3",
+    "rimraf": "~5.0.1",
+    "tsup": "~7.1.0",
+    "typescript": "~5.1.6",
+    "vitest": "~0.34.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
   },
   "peerDependencies": {
-    "vue": "^3.2.0"
+    "vue": ">= 3.2.0 < 4.0.0"
   },
   "peerDependenciesMeta": {
     "vue-router": {
@@ -95,7 +99,7 @@
     }
   },
   "optionalDependencies": {
-    "vue-router": "^4.1.0"
+    "vue-router": ">= 4.1.0 < 5.0.0"
   },
-  "packageManager": "pnpm@7.13.2"
+  "packageManager": "pnpm@8.6.11"
 }

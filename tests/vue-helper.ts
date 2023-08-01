@@ -1,6 +1,6 @@
 import type { App } from 'vue';
 import { createApp, defineComponent } from 'vue';
-import type { Router, RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw, Router } from 'vue-router';
 import { createMemoryHistory, createRouter } from 'vue-router';
 
 export function appendAppDivToBody(): void {
@@ -9,7 +9,7 @@ export function appendAppDivToBody(): void {
   document.body.appendChild(appDiv);
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createAppWithComponent() {
   // eslint-disable-next-line @typescript-eslint/typedef
   const appComponent = defineComponent({
@@ -22,7 +22,7 @@ export function createAppWithComponent() {
   return { app, component: appComponent };
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/explicit-module-boundary-types
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function createAppWithRouter(routes: RouteRecordRaw[]) {
   const router: Router = createRouter({
     history: createMemoryHistory(),

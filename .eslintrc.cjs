@@ -12,6 +12,7 @@ module.exports = defineConfig({
     es6: true,
     node: true,
   },
+  reportUnusedDisableDirectives: true,
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -21,7 +22,8 @@ module.exports = defineConfig({
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: ['./tsconfig.lint.json'],
+    project: ['./tsconfig.json'],
+    sourceType: 'module',
     warnOnUnsupportedTypeScriptVersion: false,
   },
   plugins: ['@typescript-eslint', 'prettier', 'jsdoc', 'spellcheck'],
@@ -29,28 +31,57 @@ module.exports = defineConfig({
     curly: ['error'],
     'linebreak-style': ['error', 'unix'],
     'no-case-declarations': 'warn',
+    'no-restricted-globals': [
+      'error',
+      {
+        name: '__dirname',
+        message: "Use `fileURLToPath(new URL('.', import.meta.url))` instead.",
+      },
+    ],
     quotes: ['error', 'single', { avoidEscape: true }],
     semi: ['error', 'always'],
 
-    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/array-type': [
+      'warn',
+      { default: 'array-simple', readonly: 'generic' },
+    ],
+    '@typescript-eslint/ban-ts-comment': [
+      'error',
+      { 'ts-expect-error': 'allow-with-description' },
+    ],
+    '@typescript-eslint/ban-types': 'warn',
+    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/explicit-function-return-type': [
       'error',
       { allowExpressions: true },
     ],
-    '@typescript-eslint/interface-name-prefix': 'off',
-    '@typescript-eslint/member-ordering': 'warn',
-    '@typescript-eslint/consistent-type-imports': [
+    '@typescript-eslint/explicit-member-accessibility': 'error',
+    '@typescript-eslint/indent': [
       'error',
-      { prefer: 'type-imports', disallowTypeAnnotations: false },
+      2,
+      {
+        SwitchCase: 1,
+        ignoredNodes: ['MemberExpression', 'TSTypeParameterInstantiation'],
+      },
     ],
+    '@typescript-eslint/lines-between-class-members': [
+      'warn',
+      'always',
+      { exceptAfterSingleLine: true },
+    ],
+    '@typescript-eslint/member-ordering': 'warn',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-inferrable-types': 'off',
     '@typescript-eslint/no-parameter-properties': 'off',
+    '@typescript-eslint/no-unsafe-argument': 'off',
     '@typescript-eslint/no-unsafe-assignment': 'off',
+    '@typescript-eslint/no-unsafe-call': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/prefer-nullish-coalescing': 'warn',
     '@typescript-eslint/prefer-optional-chain': 'warn',
-    '@typescript-eslint/prefer-readonly': ['warn'],
+    '@typescript-eslint/prefer-readonly': 'warn',
+    '@typescript-eslint/prefer-reduce-type-parameter': 'warn',
+    '@typescript-eslint/require-await': 'warn',
     '@typescript-eslint/restrict-template-expressions': 'off',
     '@typescript-eslint/typedef': [
       'warn',
@@ -90,6 +121,7 @@ module.exports = defineConfig({
     ],
     'jsdoc/require-param-type': 'off',
     'jsdoc/require-returns-type': 'off',
+    'jsdoc/tag-lines': 'off',
 
     'spellcheck/spell-checker': [
       'warn',
