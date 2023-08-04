@@ -12,7 +12,7 @@ dependencies:
 optionalDependencies:
   vue-router:
     specifier: '>= 4.1.0 < 5.0.0'
-    version: 4.1.0(vue@3.3.4)
+    version: 4.2.4(vue@3.3.4)
 
 devDependencies:
   '@typescript-eslint/eslint-plugin':
@@ -697,6 +697,7 @@ packages:
 
   /@vue/devtools-api@6.5.0:
     resolution: {integrity: sha512-o9KfBeaBmCKl10usN4crU53fYtC1r7jJwdGKjPT24t348rHxgfpZ0xL3Xm/gLUYnc0oTp8LAmrxOeLyu6tbk2Q==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -3392,8 +3393,8 @@ packages:
       - terser
     dev: true
 
-  /vue-router@4.1.0(vue@3.3.4):
-    resolution: {integrity: sha512-A+dYO0ZXLJFZ40ebW3XtqehCW0Wv2xNH4lFddOByDja4NtItEdyirrShTlvD3UA4xc5a5mG2RRI30BusYpOb9g==}
+  /vue-router@4.2.4(vue@3.3.4):
+    resolution: {integrity: sha512-9PISkmaCO02OzPVOMq2w82ilty6+xJmQrarYZDkjZBfl4RvYAlt4PKnEX21oW4KTtWfa9OuO/b3qk1Od3AEdCQ==}
     requiresBuild: true
     peerDependencies:
       vue: ^3.2.0
