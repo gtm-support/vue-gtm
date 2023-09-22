@@ -7,7 +7,7 @@ settings:
 dependencies:
   '@gtm-support/core':
     specifier: ^2.0.0
-    version: 2.0.0
+    version: 2.1.0
 
 optionalDependencies:
   vue-router:
@@ -344,8 +344,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@gtm-support/core@2.0.0:
-    resolution: {integrity: sha512-32hyxR/LIB6EWnUcbbrUzjkAE6PSRtqv/AztEnQ8MuCOQ7+u+yXOssfZqNDSWlQkEBn0Co6f7aHG+vcNZCGiLw==}
+  /@gtm-support/core@2.1.0:
+    resolution: {integrity: sha512-VU7S3aX/jpxrzmJT8F1cn2SuGTEpA62Vacv/rLBvwMOAAPu/QqZtj0eJdpOBLjY/cBx0Q91XXQGB9j48fvF6yg==}
     dev: false
 
   /@humanwhocodes/config-array@0.11.11:
