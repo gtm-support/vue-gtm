@@ -6,7 +6,7 @@ import type {
 } from '@gtm-support/core';
 import { GtmSupport as GtmPlugin, loadScript } from '@gtm-support/core';
 import type { App, Plugin } from 'vue';
-import { nextTick } from 'vue';
+import { nextTick, getCurrentInstance } from 'vue';
 import type {
   ErrorTypes,
   NavigationFailure,
@@ -240,5 +240,6 @@ export default _default;
  * @returns The Vue GTM instance if the it was installed, otherwise `undefined`.
  */
 export function useGtm(): GtmPlugin | undefined {
-  return gtmPlugin;
+  const app = getCurrentInstance()?.appContext?.app;
+  return app?.config?.globalProperties?.$gtm;
 }
