@@ -12,7 +12,8 @@
     "noUncheckedIndexedAccess": true,
     "removeComments": true,
     "rootDir": ".",
-    "baseUrl": "./"
+    "baseUrl": "./",
+    "skipLibCheck": true
   },
   "exclude": ["node_modules", "dist"]
 }
