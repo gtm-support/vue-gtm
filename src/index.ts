@@ -6,7 +6,7 @@ import type {
 } from '@gtm-support/core';
 import { GtmSupport as GtmPlugin, loadScript } from '@gtm-support/core';
 import type { App, Plugin } from 'vue';
-import { nextTick } from 'vue';
+import { getCurrentInstance, nextTick } from 'vue';
 import type {
   ErrorTypes,
   NavigationFailure,
@@ -240,5 +240,9 @@ export default _default;
  * @returns The Vue GTM instance if the it was installed, otherwise `undefined`.
  */
 export function useGtm(): GtmPlugin | undefined {
-  return gtmPlugin;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return (
+    getCurrentInstance()?.appContext?.app?.config?.globalProperties?.$gtm ??
+    gtmPlugin
+  );
 }
