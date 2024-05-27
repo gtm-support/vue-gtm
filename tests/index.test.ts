@@ -29,7 +29,7 @@ describe('Default', () => {
         .toUpperCase()
         .replace(/.*-|[^0-9A-Z]/g, '');
 
-      const expectedErrorMessage: string = `'${invalidGtmId}' is not a valid GTM-ID (/^GTM-[0-9A-Z]+$/). Did you mean 'GTM-${suggestion}'?`;
+      const expectedErrorMessage: string = `'${invalidGtmId}' is not a valid GTM-ID (/^(GTM|G)-[0-9A-Z]+$/). Did you mean 'GTM-${suggestion}' or 'G-${suggestion}'?`;
 
       expect(() => {
         VueGtm.install?.(fakeVueInstance, { id: invalidGtmId });

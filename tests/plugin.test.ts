@@ -6,6 +6,7 @@ describe('Plugin', () => {
     const instance: VueGtmPlugin = new VueGtmPlugin({ id: 'GTM-DEMO' });
     expect(instance.options).toEqual({
       compatibility: false,
+      dataLayerName: 'dataLayer',
       debug: false,
       defer: false,
       enabled: true,

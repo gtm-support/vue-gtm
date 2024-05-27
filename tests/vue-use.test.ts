@@ -106,7 +106,7 @@ describe('Vue.use', () => {
     expect(document.scripts.length).toBe(1);
     expect(document.scripts.item(0)).toBeDefined();
     expect(document.scripts.item(0)?.src).toBe(
-      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO',
+      'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO&l=dataLayer',
     );
   });
 
