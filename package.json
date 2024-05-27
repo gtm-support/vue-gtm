@@ -1,6 +1,6 @@
 {
   "name": "@gtm-support/vue-gtm",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "Simple implementation of Google Tag Manager for Vue",
   "scripts": {
     "clean": "rimraf coverage .eslintcache dist pnpm-lock.yaml node_modules",
