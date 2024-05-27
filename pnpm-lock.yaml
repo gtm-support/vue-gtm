@@ -9,16 +9,16 @@ importers:
   .:
     dependencies:
       '@gtm-support/core':
-        specifier: ^2.0.0
-        version: 2.2.0
+        specifier: ^3.0.1
+        version: 3.0.1
     optionalDependencies:
       vue-router:
         specifier: '>= 4.1.0 < 5.0.0'
         version: 4.2.5(vue@3.4.15(typescript@5.4.5))
     devDependencies:
       '@types/node':
-        specifier: ~20.11.30
-        version: 20.11.30
+        specifier: ~20.12.12
+        version: 20.12.12
       '@typescript-eslint/eslint-plugin':
         specifier: ~7.10.0
         version: 7.10.0(@typescript-eslint/parser@7.10.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
@@ -69,7 +69,7 @@ importers:
         version: 5.4.5
       vitest:
         specifier: ~1.6.0
-        version: 1.6.0(@types/node@20.11.30)(jsdom@24.1.0)
+        version: 1.6.0(@types/node@20.12.12)(jsdom@24.1.0)
       vue:
         specifier: ^3.4.15
         version: 3.4.15(typescript@5.4.5)
@@ -257,8 +257,8 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@gtm-support/core@2.2.0':
-    resolution: {integrity: sha512-GYA9LfLUcsWJBpL24e3UXjbzl/E9qYWWsEtEJU2hiDFUC07WhxgKnH7cuZk82Ld+7Iz2ZVQaDDGT0kxZxQwPLQ==}
+  '@gtm-support/core@3.0.1':
+    resolution: {integrity: sha512-SctcoqvvAbGAgZzOb7DZ4wjbZF3ZS7Las3qIEByv6g7mzPf4E9LpRXcQzjmywYLcUx2jys7PWJAa3s5slvj/0w==}
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -394,8 +394,8 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/node@20.11.30':
-    resolution: {integrity: sha512-dHM6ZxwlmuZaRmUPfv1p+KrdD1Dci04FbdEm/9wEMouFqxYoFl5aMkt0VMAUtYRQDyYvD41WJLukhq/ha3YuTw==}
+  '@types/node@20.12.12':
+    resolution: {integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==}
 
   '@typescript-eslint/eslint-plugin@7.10.0':
     resolution: {integrity: sha512-PzCr+a/KAef5ZawX7nbyNwBDtM1HdLIT53aSA2DDlxmxMngZ43O8SIePOeX8H5S+FHXeI6t97mTt/dDdzY4Fyw==}
@@ -2071,7 +2071,7 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@gtm-support/core@2.2.0': {}
+  '@gtm-support/core@3.0.1': {}
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
@@ -2182,7 +2182,7 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/node@20.11.30':
+  '@types/node@20.12.12':
     dependencies:
       undici-types: 5.26.5
 
@@ -3732,13 +3732,13 @@ snapshots:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  vite-node@1.6.0(@types/node@20.11.30):
+  vite-node@1.6.0(@types/node@20.12.12):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.0.12(@types/node@20.11.30)
+      vite: 5.0.12(@types/node@20.12.12)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -3749,16 +3749,16 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.0.12(@types/node@20.11.30):
+  vite@5.0.12(@types/node@20.12.12):
     dependencies:
       esbuild: 0.19.12
       postcss: 8.4.35
       rollup: 4.9.6
     optionalDependencies:
-      '@types/node': 20.11.30
+      '@types/node': 20.12.12
       fsevents: 2.3.3
 
-  vitest@1.6.0(@types/node@20.11.30)(jsdom@24.1.0):
+  vitest@1.6.0(@types/node@20.12.12)(jsdom@24.1.0):
     dependencies:
       '@vitest/expect': 1.6.0
       '@vitest/runner': 1.6.0
@@ -3777,11 +3777,11 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.6.0
       tinypool: 0.8.4
-      vite: 5.0.12(@types/node@20.11.30)
-      vite-node: 1.6.0(@types/node@20.11.30)
+      vite: 5.0.12(@types/node@20.12.12)
+      vite-node: 1.6.0(@types/node@20.12.12)
       why-is-node-running: 2.2.2
     optionalDependencies:
-      '@types/node': 20.11.30
+      '@types/node': 20.12.12
       jsdom: 24.1.0
     transitivePeerDependencies:
       - less

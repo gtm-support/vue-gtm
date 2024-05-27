@@ -18,13 +18,9 @@
   "files": [
     "dist"
   ],
-  "main": "dist/index.cjs",
   "module": "dist/index.js",
   "exports": {
-    ".": {
-      "require": "./dist/index.cjs",
-      "default": "./dist/index.js"
-    },
+    ".": "./dist/index.js",
     "./package.json": "./package.json"
   },
   "author": {
@@ -67,10 +63,10 @@
     "google"
   ],
   "dependencies": {
-    "@gtm-support/core": "^2.0.0"
+    "@gtm-support/core": "^3.0.1"
   },
   "devDependencies": {
-    "@types/node": "~20.11.30",
+    "@types/node": "~20.12.12",
     "@typescript-eslint/eslint-plugin": "~7.10.0",
     "@typescript-eslint/parser": "~7.10.0",
     "eslint": "~8.57.0",
