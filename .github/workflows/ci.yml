@@ -12,19 +12,19 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-        node_version: [18, 20]
+        node_version: [22]
       fail-fast: false
 
     name: 'Build&Test: node-${{ matrix.node_version }}, ${{ matrix.os }}'
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v3.0.0
 
       - name: Set node version to ${{ matrix.node_version }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
           node-version: ${{ matrix.node_version }}
           cache: 'pnpm'
@@ -43,24 +43,25 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Check scripts
+        run: pnpm run ts-check
+
       - name: Test
-        run: pnpm run test --silent
+        run: pnpm run test
 
   lint:
     runs-on: ubuntu-latest
-    name: 'Lint: node-20, ubuntu-latest'
+    name: 'Lint: node-22, ubuntu-latest'
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@fe02b34f77f8bc703788d5817da081398fad5dd2 # v3.0.0
 
-      - name: Set node version to 20
-        uses: actions/setup-node@v3
+      - name: Set node version to 22
+        uses: actions/setup-node@60edb5dd545a775178f52524783378180af0d1f8 # v4.0.2
         with:
-          node-version: 20
+          node-version: 22
           cache: 'pnpm'
 
       - name: Prepare
