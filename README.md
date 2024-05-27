@@ -1,7 +1,5 @@
 <h1 align="center">Vue Google Tag Manager</h1>
 
-<h4 align="center">*** Contributors welcome ***</h4>
-
 <p align="center">
   <a href="https://tagmanager.google.com/">
     <img alt="Google Tag Manager" src="https://www.gstatic.cn/analytics-suite/header/suite/v2/ic_tag_manager.svg" height="192">
@@ -17,7 +15,7 @@
 
 <p align="center">
   <a href="https://github.com/gtm-support/vue-gtm/blob/main/LICENSE">
-    <img alt="license: Apache-2.0" src="https://img.shields.io/github/license/gtm-support/vue-gtm.svg?style=flat-square">
+    <img alt="license: MIT" src="https://img.shields.io/github/license/gtm-support/vue-gtm.svg?style=flat-square">
   </a>
   <a href="https://www.npmjs.com/package/@gtm-support/vue-gtm">
     <img alt="NPM package" src="https://img.shields.io/npm/v/@gtm-support/vue-gtm.svg?style=flat-square">
@@ -37,8 +35,6 @@ This plugin will help you in your common GTM tasks.
 
 **Note: If you are looking to track all Vuex mutations, you can use [Vuex GTM plugin](https://gist.github.com/matt-e-king/ebdb39088c50b96bbbbe77c5bc8abb2b)**
 
-> If you want Vue 2 compatibility, please use the package [@gtm-support/vue2-gtm](https://www.npmjs.com/package/@gtm-support/vue2-gtm).
-
 # Requirements
 
 - **Vue.** >= 3.0.0
@@ -50,7 +46,7 @@ This plugin will help you in your common GTM tasks.
 
 # Configuration
 
-`npm install @gtm-support/vue-gtm` or `yarn add @gtm-support/vue-gtm` if you use [Yarn package manager](https://yarnpkg.com)
+`npm install @gtm-support/vue-gtm`
 
 Here is an example configuration:
 
@@ -292,11 +288,6 @@ Disable debug mode
 ```js
 this.$gtm.debug(false);
 ```
-
-## IE 11 support
-
-If you really need to support browsers like IE 11, you need to configure `transpileDependencies: ['@gtm-support/core']` in your `vue.config.js`.  
-See [gtm-support/core#20 (comment)](https://github.com/gtm-support/core/issues/20#issuecomment-855903062)
 
 ## Credits
 
