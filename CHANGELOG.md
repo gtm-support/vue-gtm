@@ -1,6 +1,15 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/2.2.0...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/3.0.0...main)
+
+# 3.0.0
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/2.2.0...3.0.0)
+
+- Drop cjs support
+- Return gtmPlugin from app context ([#409])
+
+[#409]: https://github.com/gtm-support/vue-gtm/pull/409
 
 # 2.2.0
 
