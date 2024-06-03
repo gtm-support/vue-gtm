@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/3.0.0...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/3.0.1...main)
+
+# 3.0.1
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/3.0.0...3.0.1)
+
+- Fix missing `types` exposing
 
 # 3.0.0
 
