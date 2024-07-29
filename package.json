@@ -64,7 +64,7 @@
     "google"
   ],
   "dependencies": {
-    "@gtm-support/core": "^3.0.1"
+    "@dine/gtm-support-core": "^3.1.0-rc.3"
   },
   "devDependencies": {
     "@types/node": "~20.12.12",

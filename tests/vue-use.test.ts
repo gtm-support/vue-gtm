@@ -1,3 +1,4 @@
+import type { DataAttributes } from '@dine/gtm-support-core';
 import { afterEach, describe, expect, test } from 'vitest';
 import type { DataLayerObject, GtmPlugin as VueGtmPlugin } from '../src/index';
 import { createGtm } from '../src/index';
@@ -108,6 +109,28 @@ describe('Vue.use', () => {
     expect(document.scripts.item(0)?.src).toBe(
       'https://www.googletagmanager.com/gtm.js?id=GTM-DEMO&l=dataLayer',
     );
+  });
+
+  describe('Check data attributes', () => {
+    afterEach(() => {
+      resetHtml();
+    });
+
+    test('should set data attributes if configured', () => {
+      appendAppDivToBody();
+      const { app } = createAppWithComponent();
+
+      const dataAttributes: DataAttributes[] = [
+        { name: 'test', value: 'test' },
+        { name: 'test2', value: 'test2' },
+      ];
+
+      app.use(createGtm({ id: 'GTM-DEMO', dataAttributes })).mount('#app');
+
+      expect(document.scripts.length).toBe(1);
+      expect(document.scripts.item(0)).toBeDefined();
+      expect(document.scripts.item(0)).toMatchSnapshot();
+    });
   });
 
   describe('Check src.nonce', () => {

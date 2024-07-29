@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Vue.use > Check data attributes > should set data attributes if configured 1`] = `
+<script
+  data-test="test"
+  data-test2="test2"
+  src="https://www.googletagmanager.com/gtm.js?id=GTM-DEMO"
+/>
+`;
