@@ -199,8 +199,7 @@ export function createGtm(options: VueGtmUseOptions): VueGtmPlugin {
   return { install: (app: App) => install(app, options) };
 }
 
-// @ts-expect-error: assume that `vue` already brings this dependency
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   // eslint-disable-next-line jsdoc/require-jsdoc
   export interface ComponentCustomProperties {
     /**
@@ -240,7 +239,6 @@ export default _default;
  * @returns The Vue GTM instance if the it was installed, otherwise `undefined`.
  */
 export function useGtm(): GtmPlugin | undefined {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return (
     getCurrentInstance()?.appContext?.app?.config?.globalProperties?.$gtm ??
     gtmPlugin
