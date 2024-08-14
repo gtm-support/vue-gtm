@@ -1,6 +1,13 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/3.0.1...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/3.1.0...main)
+
+# 3.1.0
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/3.0.1...3.1.0)
+
+- Fix type augmentation for `vue`
+- Update `peerDependencies`
 
 # 3.0.1
 
