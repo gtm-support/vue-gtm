@@ -217,8 +217,8 @@ export type VueGtmPlugin = Plugin;
 const _default: VueGtmPlugin = { install };
 
 export {
-  GtmSupport,
   assertIsGtmId,
+  GtmSupport,
   hasScript,
   loadScript,
 } from '@gtm-support/core';
