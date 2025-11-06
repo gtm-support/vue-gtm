@@ -63,6 +63,7 @@ function install(
         options.vueRouter,
         options.ignoredViews,
         options.trackOnNextTick,
+        options.vueRouterAdditionalEventData,
       );
     }
 
