@@ -28,12 +28,9 @@ jobs:
       - name: Prepare
         run: pnpm install --frozen-lockfile
 
-      - name: Set publishing config
-        run: pnpm config set '//registry.npmjs.org/:_authToken' "${NODE_AUTH_TOKEN}"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Publish
         run: |
           PACKAGE_DIST_TAG=$(node -e "console.log(/^\d+\.\d+\.\d+(\-(\w+)\.\d+)$/.exec(require('./package.json').version)?.[2] || 'latest')")
           pnpm publish --access public --tag $PACKAGE_DIST_TAG --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
