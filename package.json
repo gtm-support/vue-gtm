@@ -1,6 +1,6 @@
 {
   "name": "@gtm-support/vue-gtm",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Simple implementation of Google Tag Manager for Vue",
   "scripts": {
     "clean": "rimraf coverage .eslintcache dist pnpm-lock.yaml node_modules",
@@ -86,7 +86,7 @@
     "typescript": "~5.5.4",
     "vitest": "~2.0.5",
     "vue": "^3.4.37",
-    "vue-router": "^4.4.3"
+    "vue-router": "^5.0.2"
   },
   "peerDependencies": {
     "vue": ">= 3.2.26 < 4.0.0"
@@ -97,7 +97,7 @@
     }
   },
   "optionalDependencies": {
-    "vue-router": ">= 4.4.1 < 5.0.0"
+    "vue-router": ">= 4.4.1 < 6.0.0"
   },
   "packageManager": "pnpm@9.7.0"
 }

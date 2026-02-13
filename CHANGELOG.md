@@ -1,6 +1,12 @@
 # Next
 
-[diff](https://github.com/gtm-support/vue-gtm/compare/3.1.0...main)
+[diff](https://github.com/gtm-support/vue-gtm/compare/3.2.0...main)
+
+# 3.2.0
+
+[diff](https://github.com/gtm-support/vue-gtm/compare/3.1.0...3.2.0)
+
+- Add support for `vue-router` `>=5.0.0`
 
 # 3.1.0
 
