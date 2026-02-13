@@ -3,6 +3,10 @@ name: Publish
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   release:
     if: github.ref == 'refs/heads/main'
