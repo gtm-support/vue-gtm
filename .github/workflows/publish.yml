@@ -31,4 +31,4 @@ jobs:
       - name: Publish
         run: |
           PACKAGE_DIST_TAG=$(node -e "console.log(/^\d+\.\d+\.\d+(\-(\w+)\.\d+)$/.exec(require('./package.json').version)?.[2] || 'latest')")
-          pnpm publish --access public --tag $PACKAGE_DIST_TAG
+          pnpm publish --access public --tag $PACKAGE_DIST_TAG --provenance
